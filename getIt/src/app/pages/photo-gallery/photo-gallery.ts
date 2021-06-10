@@ -8,12 +8,12 @@ import { ShowAlertMessage } from "../../helpers/showAlertMessage";
 import { generateUUID } from "../../helpers/uuid";
 
 @Component({
-  selector: 'app-tab2',
-  templateUrl: 'tab2.page.html',
-  styleUrls: ['tab2.page.scss']
+  selector: 'app-photo-gallery',
+  templateUrl: 'photo-gallery.page.html',
+  styleUrls: ['photo-gallery.page.scss']
 })
 
-export class Tab2Page {
+export class PhotoGalleryPage {
   public postForm: FormGroup;
   private photoGallery: IPhotoGallery = {
 	image: "",

@@ -3,7 +3,7 @@ import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Tab2Page } from './tab2.page';
+import { PhotoGalleryPage } from './photo-gallery';
 import { ExploreContainerComponentModule } from '../../components/explore-container/explore-container.module';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -14,8 +14,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     FormsModule,
 	ReactiveFormsModule,
     ExploreContainerComponentModule,
-    RouterModule.forChild([{ path: '', component: Tab2Page }])
+    RouterModule.forChild([{ path: '', component: PhotoGalleryPage }])
   ],
-  declarations: [Tab2Page]
+  declarations: [PhotoGalleryPage]
 })
-export class Tab2PageModule {}
+export class PhotoGalleryPageModule {}
