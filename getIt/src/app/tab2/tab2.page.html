@@ -1,0 +1,62 @@
+<ion-header>
+	<ion-toolbar>
+    	<ion-title>
+      		Crear Publicacion
+    	</ion-title>
+  	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+  	<ion-header collapse="condense">
+    	<ion-toolbar>
+      		<ion-title size="large">Galeria de Fotos</ion-title>
+    	</ion-toolbar>
+  	</ion-header>
+
+  	<ion-grid>
+    	<ion-row>
+    		<ion-col size="6" *ngFor="let photo of photoService.photos; index as position">
+      			<ion-img [src]="photo.webviewPath" (click)="showActionSheet(photo, position)"></ion-img>
+    		</ion-col>
+    	</ion-row>
+  	</ion-grid>
+
+  	<ion-fab vertical="bottom" horizontal="center" slot="fixed">
+    	<ion-fab-button (click)="photoService.addNewToGallery()">
+      		<ion-icon name="camera"></ion-icon>
+    	</ion-fab-button>
+  	</ion-fab>
+
+  	<form [formGroup]="postForm" novalidate>
+  		<ion-item>
+	  		<ion-label position="floating">
+				Descripción
+				<ion-text color="purple">*</ion-text>
+	  		</ion-label>
+	  		<ion-textarea formControlName="description" clearInput></ion-textarea>
+		</ion-item>
+		<ion-label color="danger" *ngIf="isInvalid('description')">
+	  		<h6 *ngIf="hasErrorControl('description', 'required')">
+				  Este campo es requerido
+			</h6>
+	  		<h6 *ngIf="hasErrorControl('description', 'minlength')">
+				Debe ser mínimo de 10 caracteres
+	  		</h6>
+	  		<h6 *ngIf="hasErrorControl('description', 'maxlength')">
+				Debe ser máximo de 250 caracteres
+	  		</h6>
+		</ion-label>
+  	</form>
+	
+	<ion-row>
+		<ion-col>
+	  		<ion-button expand="block" color="secondary" (click)="cancel()">Cancelar</ion-button>
+		</ion-col>
+		<ion-col>
+	  		<ion-button expand="block" color="primary" type="submit" (click)="save()" [disabled]="!postForm.valid">
+				Aceptar
+	  		</ion-button>
+		</ion-col>
+  	</ion-row>
+
+</ion-content>
