@@ -3,6 +3,12 @@
     	<ion-title>
       		Crear Publicacion
     	</ion-title>
+		
+		<ion-fab vertical="bottom" horizontal="center" slot="fixed">
+			<ion-fab-button (click)="photoService.addNewToGallery()">
+				<ion-icon name="camera"></ion-icon>
+			</ion-fab-button>
+		</ion-fab>
   	</ion-toolbar>
 </ion-header>
 
@@ -13,6 +19,12 @@
     	</ion-toolbar>
   	</ion-header>
 
+	<ion-fab vertical="bottom" horizontal="center" slot="fixed">
+		<ion-fab-button (click)="photoService.addNewToGallery()">
+			<ion-icon name="camera"></ion-icon>
+		</ion-fab-button>
+	</ion-fab>
+
   	<ion-grid>
     	<ion-row>
     		<ion-col size="6" *ngFor="let photo of photoService.photos; index as position">
@@ -20,12 +32,6 @@
     		</ion-col>
     	</ion-row>
   	</ion-grid>
-
-  	<ion-fab vertical="bottom" horizontal="center" slot="fixed">
-    	<ion-fab-button (click)="photoService.addNewToGallery()">
-      		<ion-icon name="camera"></ion-icon>
-    	</ion-fab-button>
-  	</ion-fab>
 
   	<form [formGroup]="postForm" novalidate>
   		<ion-item>
@@ -37,13 +43,13 @@
 		</ion-item>
 		<ion-label color="danger" *ngIf="isInvalid('description')">
 	  		<h6 *ngIf="hasErrorControl('description', 'required')">
-				  Este campo es requerido
+				El campo descripcion es requerido
 			</h6>
 	  		<h6 *ngIf="hasErrorControl('description', 'minlength')">
-				Debe ser mínimo de 10 caracteres
+				La cantidad mínima de caracteres es 10
 	  		</h6>
 	  		<h6 *ngIf="hasErrorControl('description', 'maxlength')">
-				Debe ser máximo de 250 caracteres
+				La cantidad máxima de caracteres es de 250
 	  		</h6>
 		</ion-label>
   	</form>

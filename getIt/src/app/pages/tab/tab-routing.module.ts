@@ -11,8 +11,7 @@ const routes: Routes = [
         path: "view-profile/:id",
         loadChildren: () =>
           import("../../pages/view-profile/view-profile.module").then(
-            (m) => m.ViewProfilePageModule
-          ),
+            (m) => m.ViewProfilePageModule),
       },
       {
         path: "publish",
