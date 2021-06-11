@@ -5,6 +5,8 @@ import { ApiService } from "src/app/services/api.service";
 import { ShowAlertMessage } from "src/app/helpers/showAlertMessage";
 import { Publication } from "src/app/models/publication.model";
 import { WorkArea } from "src/app/models/workArea.model";
+import { UserPhoto, PhotoService } from '../../services/photo.service';
+import { ActionSheetController } from '@ionic/angular';
 
 @Component({
   selector: "app-publish-offer-and-demand",
@@ -21,12 +23,15 @@ export class PublishOfferAndDemandPage implements OnInit {
   constructor(
     public formBuilder: FormBuilder,
     private apiService: ApiService,
-    private route: Router
+    private route: Router,	
+	public photoService: PhotoService,
+	public actionSheetController: ActionSheetController,
   ) {}
 
-  public ngOnInit() {
+  public async ngOnInit() {
     this.createPublicationForm();
     this.loadWorkAreas();
+	await this.photoService.loadSaved();
   }
 
   public async loadWorkAreas() {
@@ -37,9 +42,30 @@ export class PublishOfferAndDemandPage implements OnInit {
       });
   }
 
+  public async showActionSheet(photo: UserPhoto, position: number) {
+    const actionSheet = await this.actionSheetController.create({
+      header: 'Photos',
+      buttons: [{
+        text: 'Borrar',
+        role: 'destructive',
+        icon: 'trash',
+        handler: () => {
+          this.photoService.deletePicture(photo, position);
+        }
+      }, {
+        text: 'Cancelar',
+        icon: 'close',
+        role: 'cancel',
+        handler: () => {}
+      }]
+    });
+    await actionSheet.present();
+  }
+
   public save() {
     this.publication = this.publicationForm.value as Publication;
     this.publication.userId = this.USER_ID;
+	this.publication.image = this.photoService.photos[0].webviewPath;
     this.apiService
       .post(`/publication`, this.publication)
       .subscribe((results) => {

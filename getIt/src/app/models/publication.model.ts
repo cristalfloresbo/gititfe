@@ -6,4 +6,5 @@ export interface Publication {
   timeRequiredOrOffered: number;
   description: String;
   userId: number;
+  image: string;
 }

@@ -1,7 +1,7 @@
 <ion-content>
 	<ion-list>
     	<ion-card *ngFor="let ad of ad$| async">
-			<ion-item href="getit/view-profile/{{ad.user.id}}">
+			<ion-item href="getit/view-profile/:data:image/jpeg;base64,{{ad.image}}">
 				<ion-avatar slot="start">
 					<ion-img src="https://www.shankarainfra.com/img/avatar.png"></ion-img>
 				</ion-avatar>
@@ -9,7 +9,11 @@
 				  {{ ad.user.email }}
 				</ion-label>
 			</ion-item>
-			<img src="https://atasouthport.com/wp-content/uploads/2017/04/default-image-620x600.jpg" alt="Default">
+			
+			<ion-row>
+				<ion-img [src]="'data:image/jpeg;base64,'+ad.image" alt="Default"> </ion-img>
+			</ion-row>
+
 			<ion-card-title></ion-card-title>
 			<ion-card-subtitle></ion-card-subtitle>
 			<ion-card-content>

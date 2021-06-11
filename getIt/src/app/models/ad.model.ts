@@ -10,4 +10,5 @@ export interface Ad {
   description: string;
   createdAt: string;
   user: User;
+  image: string;
 }
