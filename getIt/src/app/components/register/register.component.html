@@ -87,7 +87,15 @@
 		<ion-label class="M1" color="danger" *ngIf="user.controls.password.errors?.pattern && (user.controls.password.touched || user.controls.password.dirty)">una minúscula y un número.</ion-label>
 		<br>
 		<ion-label class="M1" color="danger" *ngIf="user.controls.password.errors?.minlength && (user.controls.password.touched || user.controls.password.dirty)">Ingrese mínimo 8 caracteres.</ion-label>
-				  
+		
+		<ion-fab vertical="bottom" horizontal="center" slot="fixed">
+			<ion-fab-button (click)="addPhotoToGallery()">
+			  <ion-icon name="camera"></ion-icon>
+			</ion-fab-button>
+		</ion-fab>
+
+		  <br>
+
 		<p class="ion-text-center">
 			<ion-grid>
 				<ion-row>

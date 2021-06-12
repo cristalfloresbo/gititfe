@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { SplashScreen } from '@capacitor/splash-screen';
 import { Platform } from "@ionic/angular";
-//import { StatusBar } from "@ionic-native/status-bar/ngx";
+import { StatusBar } from "@ionic-native/status-bar/ngx";
+import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +11,8 @@ import { Platform } from "@ionic/angular";
 export class AppComponent {
 	constructor(
 		private platform: Platform, 
-		//private statusBar: StatusBar
+		private splashScreen: SplashScreen,
+    	private statusBar: StatusBar
 		) {	
 		this.initializeApp();
 	}
@@ -24,7 +25,7 @@ export class AppComponent {
         https://capacitor.ionicframework.com/docs/apis/splash-screen#hiding-the-splash-screen
     */
    	this.platform.ready().then(() => {
-		//this.statusBar.styleDefault();
-	   	SplashScreen.hide();
+		this.statusBar.styleDefault();
+	   	this.splashScreen.hide();
 	});}
 }

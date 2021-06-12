@@ -6,6 +6,8 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { ShowAlertMessage } from "src/app/helpers/showAlertMessage";
 import { WorkArea } from "src/app/models/workArea.model";
 import * as moment from "moment";
+import { PhotoService } from 'src/app/services/photo.service';
+
 
 @Component({
   selector: "app-register",
@@ -25,7 +27,8 @@ export class RegisterComponent implements OnInit {
 
   constructor(
     public formBuilder: FormBuilder,
-    private apiService: ApiService
+    private apiService: ApiService,
+    public photoService: PhotoService
   ) {}
 
   ngOnInit() {
@@ -137,6 +140,10 @@ export class RegisterComponent implements OnInit {
     this.user.controls.workAreaid.setValue("0");
     this.user.controls.email.setValue("");
     this.user.controls.password.setValue("");
+  }
+
+  addPhotoToGallery() {
+    this.photoService.addNewToGallery();
   }
 
   private cancel(): void {
