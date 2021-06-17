@@ -5,8 +5,9 @@ import { ApiService } from "src/app/services/api.service";
 import { ShowAlertMessage } from "src/app/helpers/showAlertMessage";
 import { Publication } from "src/app/models/publication.model";
 import { WorkArea } from "src/app/models/workArea.model";
-import { UserPhoto, PhotoService } from '../../services/photo.service';
+import { PhotoService } from '../../services/photo.service';
 import { ActionSheetController } from '@ionic/angular';
+import { UserPhoto } from "src/app/models/userPhoto.model";
 
 @Component({
   selector: "app-publish-offer-and-demand",
@@ -62,17 +63,30 @@ export class PublishOfferAndDemandPage implements OnInit {
     await actionSheet.present();
   }
 
-  public save() {
+  public async save() {
     this.publication = this.publicationForm.value as Publication;
     this.publication.userId = this.USER_ID;
-	this.publication.image = this.photoService.photos[0].webviewPath;
-    this.apiService
-      .post(`/publication`, this.publication)
-      .subscribe((results) => {
-        this.showMessage.showSuccessAlert(
-          "Publicación registrada exitosamente"
-        );
-      });
+	if ((this.photoService.photos.length > 0)) {
+		this.publication.image = this.photoService.photos[0].webviewPath;
+		console.log("f", this.publication);
+
+		this.apiService.post("publication", this.publication)
+		.subscribe((response) => {
+			this.showMessage.showSuccessAlert(
+				"Publicación registrada exitosamente"
+			);
+		});
+		this.deletePhotoToGallery(this.photoService.photos[0], 0);
+	} else {
+		this.publication.image = "";
+		this.apiService.post(`publication`, this.publication)
+		.subscribe((results) => {
+			this.showMessage.showSuccessAlert(
+				"Publicación registrada exitosamente"
+			);
+		});
+	}
+	this.clearPublicationForm();
   }
 
   public isInvalid(formControlName: string) {
@@ -102,10 +116,27 @@ export class PublishOfferAndDemandPage implements OnInit {
         "",
         [
           Validators.required,
-          Validators.maxLength(100),
+          Validators.maxLength(250),
           Validators.minLength(10),
         ],
       ],
     });
+  }
+
+  private clearPublicationForm() {
+	  this.publicationForm.controls.address.setValue("");
+	  this.publicationForm.controls.timeRequiredOrOffered.setValue("");
+	  this.publicationForm.controls.tariff.setValue("");
+	  this.publicationForm.controls.description.setValue("");
+	  this.publicationForm.controls.workAreaId.setValue("0");
+	  this.publicationForm.controls.typePublication.setValue("0");
+  }
+
+  addPhotoToGallery() {
+    this.photoService.addNewToGallery();
+  }
+
+  deletePhotoToGallery(photo: UserPhoto, position: number) {
+    this.photoService.deletePicture(photo, position);
   }
 }

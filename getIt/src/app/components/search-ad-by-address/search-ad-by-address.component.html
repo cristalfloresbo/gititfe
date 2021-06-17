@@ -1,5 +1,9 @@
 <ion-header>
 	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-back-button color="tertiary" defaultHref="/getit/search"></ion-back-button>
+		</ion-buttons>
+
 		<ion-title>Buscar por Ubicación</ion-title>
 	</ion-toolbar>
 </ion-header>
@@ -8,7 +12,7 @@
 	<ion-searchbar (ionChange)="search( $event )"></ion-searchbar>
 	<ion-list>
     	<ion-card *ngFor="let ad of ads | filtro: txtToSearch: 'address'">
-			<ion-item [routerLink]="['/', ad.user.id]">
+			<ion-item href="getit/view-profile/{{ad.user.id}}">
 				<ion-avatar slot="start">
 					<ion-img src="https://www.shankarainfra.com/img/avatar.png"></ion-img>
 				</ion-avatar>
@@ -16,7 +20,9 @@
 				  {{ ad.user.email }}
 				</ion-label>
 			</ion-item>
-			<img src="https://atasouthport.com/wp-content/uploads/2017/04/default-image-620x600.jpg" alt="Default">
+			<ion-row *ngIf="ad.image != ''">
+				<ion-img height="100%" width="100%" [src]="ad.image" alt="Default"> </ion-img>
+			</ion-row>
 			<ion-card-title></ion-card-title>
 			<ion-card-subtitle></ion-card-subtitle>
 			<ion-card-content>
@@ -42,21 +48,21 @@
 					</ion-col>
 				</ion-row>
 				<ion-row>
-					<ion-col>
+					<ion-col *ngIf="ad.fee > 0">
 						<ion-label>
 							<p>Bs {{ad.fee}}</p>
 						</ion-label>
 					</ion-col>
 				</ion-row>
 				<ion-row>
-					<ion-col>
+					<ion-col *ngIf="ad.requiredTime > 0">
 						<ion-label>
 							<p>Tiempo requerido: {{ad.requiredTime}} dias</p>
 						</ion-label>
 					</ion-col>
 				</ion-row>
 				<ion-row>
-					<ion-col>
+					<ion-col *ngIf="ad.address != ''">
 						<ion-label>
 							<p>{{ad.address}}</p>
 						</ion-label>

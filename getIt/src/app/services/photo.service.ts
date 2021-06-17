@@ -4,11 +4,11 @@ import { Capacitor } from '@capacitor/core';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { Storage } from '@capacitor/storage';
 import { Platform } from '@ionic/angular';
+import { UserPhoto } from "src/app/models/userPhoto.model";
 
 @Injectable({
   providedIn: 'root',
 })
-
 export class PhotoService {
   public photos: UserPhoto[] = [];
   private PHOTO_STORAGE: string = 'photos';
@@ -19,7 +19,6 @@ export class PhotoService {
     // Retrieve cached photo array data
     const photoList = await Storage.get({ key: this.PHOTO_STORAGE });
     this.photos = JSON.parse(photoList.value) || [];
-	console.log(this.photos);
 
     // If running on the web...
     if (!this.platform.is('hybrid')) {
@@ -39,10 +38,8 @@ export class PhotoService {
 
   /* Use the device camera to take a photo:
   // https://capacitor.ionicframework.com/docs/apis/camera
-
   // Store the photo data into permanent file storage:
   // https://capacitor.ionicframework.com/docs/apis/filesystem
-
   // Store a reference to all photo filepaths using Storage API:
   // https://capacitor.ionicframework.com/docs/apis/storage
   */
@@ -105,7 +102,6 @@ export class PhotoService {
         path: cameraPhoto.path,
       });
 
-      return file.data;
     } else {
       // Fetch the photo, read as a blob, then convert to base64 format
       const response = await fetch(cameraPhoto.webPath!);
@@ -143,9 +139,4 @@ export class PhotoService {
       };
       reader.readAsDataURL(blob);
     });
-}
-
-export interface UserPhoto {
-  filepath: string;
-  webviewPath: string;
 }

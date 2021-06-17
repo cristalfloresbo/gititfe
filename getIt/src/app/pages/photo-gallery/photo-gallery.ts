@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { ActionSheetController } from '@ionic/angular';
-import { UserPhoto, PhotoService } from '../../services/photo.service';
+import { PhotoService } from '../../services/photo.service';
+import { UserPhoto } from "src/app/models/userPhoto.model";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ApiService } from '../../services/api.service';
 import { IPhotoGallery } from '../../models/photoGallery.model';
@@ -37,7 +38,7 @@ export class PhotoGalleryPage {
 
   public async showActionSheet(photo: UserPhoto, position: number) {
     const actionSheet = await this.actionSheetController.create({
-      header: 'Photos',
+      header: 'Fotos',
       buttons: [{
         text: 'Borrar',
         role: 'destructive',
@@ -58,17 +59,21 @@ export class PhotoGalleryPage {
   public save() {
     const description = this.postForm.value.description;
 	const postId = generateUUID();
-	if (this.photoService.photos.length <= 5) {
-		this.photoService.photos.forEach(photo => {
+	if ((this.photoService.photos.length > 0) && (this.photoService.photos.length <= 5)) {
+		this.photoService.photos.forEach((photo, i) => {
 			this.photoGallery.description = description;
 			this.photoGallery.postId = postId;
 			this.photoGallery.image = photo.webviewPath;
-			this.apiService
-			.post(`photo-gallery`, this.photoGallery)
-		  });
-		this.showMessage.showSuccessAlert(
-			"Publicación registrada exitosamente"
-			); 
+			console.log("f", this.photoGallery);
+
+			this.apiService.post("photo-gallery", this.photoGallery)
+			.subscribe((response) => {
+				this.showMessage.showSuccessAlert(
+					"Publicación registrada exitosamente"
+				);
+			});
+			this.deletePhotoToGallery(photo, i);
+		}); 
 	} else {
 		this.showMessage.showWarningAlert(
 			"La cantidad maxima de imagenes por publicacion es de: 5"
@@ -103,5 +108,17 @@ export class PhotoGalleryPage {
         ],
       ],
     });
+  }
+
+  private clearPublicationForm() {
+	  this.postForm.controls.description.setValue("");
+  }
+
+  addPhotoToGallery() {
+    this.photoService.addNewToGallery();
+  }
+
+  deletePhotoToGallery(photo: UserPhoto, position: number) {
+    this.photoService.deletePicture(photo, position);
   }
 }

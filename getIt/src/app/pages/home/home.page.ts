@@ -3,6 +3,8 @@ import { Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { ApiService } from "../../services/api.service";
 import { Ad } from "../../models/ad.model";
+import { ShowAlertMessage } from 'src/app/helpers/showAlertMessage';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: "app-home",
@@ -10,11 +12,21 @@ import { Ad } from "../../models/ad.model";
   styleUrls: ["home.page.scss"],
 })
 export class HomePage implements OnInit {
-  public ad$: Observable<Ad[]>;
+  public ads: Ad[] = [];
+  public showAlertMessage = new ShowAlertMessage();
+
 
   constructor(private apiService: ApiService, private router: Router) {}
 
   public ngOnInit() {
-    this.ad$ = this.apiService.getAll<Ad[]>("publications");
+    this.getPublications();
+  }
+
+  public getPublications() {
+    this.apiService.getAll<Ad[]>("publications").subscribe(response => {
+      this.ads = response;
+    }, (error: HttpErrorResponse) => {
+      this.showAlertMessage.showErrorAlert(error.error.message_error);
+    });
   }
 }
