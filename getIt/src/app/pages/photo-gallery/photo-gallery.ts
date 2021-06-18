@@ -59,13 +59,14 @@ export class PhotoGalleryPage {
   public save() {
     const description = this.postForm.value.description;
 	const postId = generateUUID();
+	console.log("f", this.photoService.photos, this.photoService.photos.length);
 	if ((this.photoService.photos.length > 0) && (this.photoService.photos.length <= 5)) {
 		this.photoService.photos.forEach((photo, i) => {
+			console.log("indice", i);
+
 			this.photoGallery.description = description;
 			this.photoGallery.postId = postId;
 			this.photoGallery.image = photo.webviewPath;
-			console.log("f", this.photoGallery);
-
 			this.apiService.post("photo-gallery", this.photoGallery)
 			.subscribe((response) => {
 				this.showMessage.showSuccessAlert(

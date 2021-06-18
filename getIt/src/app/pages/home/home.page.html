@@ -10,7 +10,7 @@
 				</ion-label>
 			</ion-item>
 			<ion-row *ngIf="ad.image != ''">
-				<ion-img height="100%" width="100%" [src]="ad.image" alt="Default"> </ion-img>
+				<img src={{ad.image}} alt="Default" />
 			</ion-row>
 			<ion-card-title></ion-card-title>
 			<ion-card-subtitle></ion-card-subtitle>

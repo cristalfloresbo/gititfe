@@ -67,9 +67,7 @@ export class PublishOfferAndDemandPage implements OnInit {
     this.publication = this.publicationForm.value as Publication;
     this.publication.userId = this.USER_ID;
 	if ((this.photoService.photos.length > 0)) {
-		this.publication.image = this.photoService.photos[0].webviewPath;
-		console.log("f", this.publication);
-
+		this.publication.image = await this.photoService.photos[0].webviewPath;
 		this.apiService.post("publication", this.publication)
 		.subscribe((response) => {
 			this.showMessage.showSuccessAlert(
@@ -79,8 +77,8 @@ export class PublishOfferAndDemandPage implements OnInit {
 		this.deletePhotoToGallery(this.photoService.photos[0], 0);
 	} else {
 		this.publication.image = "";
-		this.apiService.post(`publication`, this.publication)
-		.subscribe((results) => {
+		this.apiService.post("publication", this.publication)
+		.subscribe((response) => {
 			this.showMessage.showSuccessAlert(
 				"Publicación registrada exitosamente"
 			);

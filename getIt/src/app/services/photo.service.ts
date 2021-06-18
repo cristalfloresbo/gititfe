@@ -1,10 +1,10 @@
+import { UserPhoto } from "src/app/models/userPhoto.model";
 import { Injectable } from '@angular/core';
 import { Camera, CameraResultType, CameraSource, Photo } from '@capacitor/camera';
 import { Capacitor } from '@capacitor/core';
 import { Directory, Filesystem } from '@capacitor/filesystem';
 import { Storage } from '@capacitor/storage';
 import { Platform } from '@ionic/angular';
-import { UserPhoto } from "src/app/models/userPhoto.model";
 
 @Injectable({
   providedIn: 'root',
@@ -88,7 +88,8 @@ export class PhotoService {
       // already loaded into memory
       return {
         filepath: fileName,
-        webviewPath: cameraPhoto.webPath,
+        //webviewPath: cameraPhoto.webPath,
+		webviewPath: base64Data
       };
     }
   }
@@ -102,6 +103,7 @@ export class PhotoService {
         path: cameraPhoto.path,
       });
 
+      return file.data;
     } else {
       // Fetch the photo, read as a blob, then convert to base64 format
       const response = await fetch(cameraPhoto.webPath!);
