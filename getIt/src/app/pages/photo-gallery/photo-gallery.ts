@@ -32,7 +32,7 @@ export class PhotoGalleryPage {
 	) {}
 
   async ngOnInit() {
-	this.createPublicationForm();
+	this.createPostForm();
 	await this.photoService.loadSaved();
   }
 
@@ -56,28 +56,33 @@ export class PhotoGalleryPage {
     await actionSheet.present();
   }
 
-  public save() {
-    const description = this.postForm.value.description;
-	const postId = generateUUID();
-	console.log("f", this.photoService.photos, this.photoService.photos.length);
-	if ((this.photoService.photos.length > 0) && (this.photoService.photos.length <= 5)) {
-		this.photoService.photos.forEach((photo, i) => {
-			console.log("indice", i);
-
-			this.photoGallery.description = description;
-			this.photoGallery.postId = postId;
-			this.photoGallery.image = photo.webviewPath;
-			this.apiService.post("photo-gallery", this.photoGallery)
-			.subscribe((response) => {
-				this.showMessage.showSuccessAlert(
-					"Publicación registrada exitosamente"
-				);
+  public async save() {
+	const photos = [...this.photoService.photos];
+	if (photos.length > 0) {
+		const description = this.postForm.value.description;
+		const postId = generateUUID();
+		if (photos.length <= 5) {
+			photos.forEach((photo) => {
+				this.photoGallery.description = description;
+				this.photoGallery.postId = postId;
+				this.photoGallery.image = photo.webviewPath;
+				this.apiService.post("photo-gallery", this.photoGallery)
+				.subscribe((response) => {
+					this.showMessage.showSuccessAlert(
+						"Publicación registrada exitosamente"
+					);
+				});
+				this.deletePhotoToGallery(photo, 0);
 			});
-			this.deletePhotoToGallery(photo, i);
-		}); 
+			this.clearPostForm();
+		} else {
+			this.showMessage.showWarningAlert(
+				"La cantidad máxima de imagenes por publicacion es: 5"
+			);
+		}
 	} else {
 		this.showMessage.showWarningAlert(
-			"La cantidad maxima de imagenes por publicacion es de: 5"
+			"La cantidad minima de imagenes por publicacion es: 1"
 		);
 	}
   }
@@ -98,7 +103,7 @@ export class PhotoGalleryPage {
     );
   }
 
-  private createPublicationForm() {
+  private createPostForm() {
     this.postForm = this.formBuilder.group({
       description: [
         "",
@@ -111,7 +116,7 @@ export class PhotoGalleryPage {
     });
   }
 
-  private clearPublicationForm() {
+  private clearPostForm() {
 	  this.postForm.controls.description.setValue("");
   }
 
