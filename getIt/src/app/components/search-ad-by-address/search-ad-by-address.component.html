@@ -14,7 +14,7 @@
     	<ion-card *ngFor="let ad of ads | filtro: txtToSearch: 'address'">
 			<ion-item href="getit/view-profile/{{ad.user.id}}">
 				<ion-avatar slot="start">
-					<ion-img src="https://www.shankarainfra.com/img/avatar.png"></ion-img>
+					<ion-img [src]="'data:image/jpeg;base64,' + ad.user.image"> </ion-img>
 				</ion-avatar>
 				<ion-label>
 				  {{ ad.user.email }}

@@ -1,46 +1,88 @@
-import { HttpErrorResponse } from "@angular/common/http";
-import { Component, OnInit } from "@angular/core";
-import { ActivatedRoute } from "@angular/router";
-import * as moment from "moment";
-import { ApiService } from "src/app/services/api.service";
-import { ShowAlertMessage } from "src/app/helpers/showAlertMessage";
-import { User } from "src/app/models/user.model";
-import data from "../../helpers/photos";
+import { HttpErrorResponse } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { ModalController } from '@ionic/angular';
+import * as moment from 'moment';
+import { ApiService } from 'src/app/services/api.service';
+import { RatingComponent } from 'src/app/components/rating/rating.component';
+import { ViewPublicationComponent } from 'src/app/components/view-publication/view-publication.component';
+import { ShowAlertMessage } from 'src/app/helpers/showAlertMessage';
+import { Rating } from 'src/app/models/rating.model';
+import { UserModel } from 'src/app/models/user.model';
 
 @Component({
-  selector: "app-view-profile",
-  templateUrl: "./view-profile.page.html",
-  styleUrls: ["./view-profile.page.scss"],
+  selector: 'app-view-profile',
+  templateUrl: './view-profile.page.html',
+  styleUrls: ['./view-profile.page.scss'],
 })
 export class ViewProfilePage implements OnInit {
-  public user: User;
+
+  public user;
+  public rating;
   public age: number;
-  public images = data;
+  public publications;
   public showAlertMessage = new ShowAlertMessage();
-  public id;
 
-  constructor(private apiService: ApiService, private route: ActivatedRoute) {}
+  constructor(private apiService: ApiService, private router: Router, private route: ActivatedRoute, private modalCtrl: ModalController) { }
 
-  public ngOnInit() {
+  ngOnInit() {
     this.getUser();
-    this.id = +this.route.snapshot.paramMap.get("id");
-    console.log("USER", this.id);
   }
 
   public getUser() {
-    this.apiService
-      .getById<User>("user", +this.route.snapshot.paramMap.get("id"))
-      .subscribe(
-        (response) => {
-          this.user = response;
-          this.age = moment(new Date()).diff(
-            moment(this.user.birthdate),
-            "years"
-          );
-        },
-        (error: HttpErrorResponse) => {
-          this.showAlertMessage.showErrorAlert(error.error.message_error);
-        }
-      );
+    this.apiService.getById<UserModel>('user', this.route.snapshot.params.id).subscribe(response => {
+      this.user = response;
+      this.getRating();
+      this.getPublications();
+      this.age = moment(new Date()).diff(moment(this.user.birthdate), 'years');
+    }, (error: HttpErrorResponse) => {
+      this.showAlertMessage.showErrorAlert(error.error.message_error);
+    });
+  }
+
+  public async viewPublication( publication: any) {
+    const modal = await this.modalCtrl.create({
+      component: ViewPublicationComponent,
+      componentProps: {
+        publicationList: publication
+      }
+    });
+    await modal.present();
+  }
+
+  public async rateUser() {
+    const modal = await this.modalCtrl.create({
+      component: RatingComponent,
+      componentProps: {
+        ratedUser: this.route.snapshot.params.id
+      }
+    });
+    await modal.present();
+  }
+
+
+  public getRating() {
+    this.apiService.getById<Array<Rating>>('user-rating', this.route.snapshot.params.id).subscribe(response => {
+      let sum = 0;
+      // tslint:disable-next-line:forin
+      for (const index in response) {
+        sum += response[index].score;
+      }
+      this.rating = sum / response.length;
+    }, (error: HttpErrorResponse) => {
+      this.showAlertMessage.showErrorAlert(error.name);
+    });
+  }
+
+  public getPublications() {
+    this.apiService.getById<any>('photos-gallery', this.route.snapshot.params.id).subscribe(response => {
+      this.publications = response;
+    }, (error: HttpErrorResponse) => {
+      this.showAlertMessage.showErrorAlert(error.error.message_error);
+    });
+  }
+
+  public goPhotoToGallery() {
+	  this.router.navigate(['getit/photo-gallery/',  this.route.snapshot.params.id]);
   }
 }

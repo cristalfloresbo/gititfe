@@ -1,7 +1,7 @@
 <ion-content>
   <div class="email">
     <ion-avatar class="profile-photo">
-      <img src="/assets/images/profile-photo.jpg">
+      <ion-img [src]="'data:image/*;base64,' + user?.image"></ion-img>
     </ion-avatar>
     <b>{{user?.email}}</b>
   </div>
@@ -12,19 +12,29 @@
     <p>Edad: {{age}}</p>
     <p>Dirección: {{user?.address}}</p>
   </div>
-  <div class="rating">  
-    <ion-icon name="star" size="large" color="primary"></ion-icon>
-    <ion-icon name="star" size="large" color="primary"></ion-icon>
-    <ion-icon name="star" size="large" color="primary"></ion-icon>
-    <ion-icon name="star" size="large" color="primary"></ion-icon>
-    <ion-icon name="star" size="large" color="primary"></ion-icon>
+  <div class="rating" (click)="rateUser()">
+    <ion-range
+      min="0"
+      max="5"
+      pin="true"
+      snaps="true"
+      color="primary"
+      disabled="true"
+      value={{rating}}>
+      <ion-icon size="small" slot="start" name="star" color="primary"></ion-icon>
+      <ion-icon slot="end" name="star" color="primary"></ion-icon>
+    </ion-range>
   </div>
+
+  <ion-fab-button (click)="goPhotoToGallery()">
+	<ion-icon name="add"></ion-icon>
+  </ion-fab-button>
 
   <ion-grid>
     <ion-row>
-      <ion-col size="4" no-padding no-margin *ngFor="let image of images;">
+      <ion-col size="4" no-padding no-margin *ngFor="let publication of publications;">
         <ion-card>
-          <ion-img src="/assets/images/image2.jpg"></ion-img>
+          <ion-img (click)="viewPublication(publication)" [src]="publication[0].image"></ion-img>
         </ion-card>
       </ion-col>
     </ion-row>

@@ -7,6 +7,8 @@ import { ApiService } from '../../services/api.service';
 import { IPhotoGallery } from '../../models/photoGallery.model';
 import { ShowAlertMessage } from "../../helpers/showAlertMessage";
 import { generateUUID } from "../../helpers/uuid";
+import { Router, ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-photo-gallery',
@@ -20,7 +22,7 @@ export class PhotoGalleryPage {
 	image: "",
 	description: "",
 	postId: "",
-	userId: 2
+	userId: 0
   };  
   private showMessage = new ShowAlertMessage();
 
@@ -28,7 +30,9 @@ export class PhotoGalleryPage {
 	  public photoService: PhotoService,
 	  public actionSheetController: ActionSheetController,
 	  public formBuilder: FormBuilder,
-	  public apiService: ApiService
+	  public apiService: ApiService,
+	  private router: Router, 
+	  private route: ActivatedRoute
 	) {}
 
   async ngOnInit() {
@@ -64,6 +68,7 @@ export class PhotoGalleryPage {
 		if (photos.length <= 5) {
 			photos.forEach((photo) => {
 				this.photoGallery.description = description;
+				this.photoGallery.userId = this.route.snapshot.params.id;
 				this.photoGallery.postId = postId;
 				this.photoGallery.image = photo.webviewPath;
 				this.apiService.post("photo-gallery", this.photoGallery)
