@@ -12,6 +12,7 @@ import { Platform } from '@ionic/angular';
 export class PhotoService {
   public photos: UserPhoto[] = [];
   private PHOTO_STORAGE: string = 'photos';
+  public image:string = "";
 
   constructor(private platform: Platform) {}
 
@@ -52,8 +53,9 @@ export class PhotoService {
       resultType: CameraResultType.Uri, // file-based data; provides best performance
       source: CameraSource.Camera, // automatically take a new photo with the camera
       quality: 100, // highest quality (0 to 100)
+      
     });
-
+    
     const savedImageFile = await this.savePicture(capturedPhoto);
 
     // Add new photo to Photos array
@@ -64,12 +66,15 @@ export class PhotoService {
       key: this.PHOTO_STORAGE,
       value: JSON.stringify(this.photos),
     });
+    console.log(savedImageFile);
   }
 
   // Save picture to file on device
   private async savePicture(cameraPhoto: Photo) {
     // Convert photo to base64 format, required by Filesystem API to save
     const base64Data = await this.readAsBase64(cameraPhoto);
+    this.image = base64Data;
+    console.log(this.image);
 
     // Write the file to the data directory
     const fileName = new Date().getTime() + '.jpeg';
@@ -96,6 +101,9 @@ export class PhotoService {
     }
   }
 
+  getImage(){
+    return (this.image.replace('data:image/jpeg;base64,/','/'));
+  }
   // Read camera photo into base64 format based on the platform the app is running on
   private async readAsBase64(cameraPhoto: Photo) {
     // "hybrid" will detect Cordova or Capacitor
@@ -148,4 +156,5 @@ export class PhotoService {
 export interface UserPhoto {
   filepath: string;
   webviewPath: string;
+  base64?: string;
 }
