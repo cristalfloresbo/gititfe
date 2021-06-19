@@ -1,11 +1,15 @@
-<ion-content class="ion-padding">
-  	<header>
-	  	<ion-buttons slot="start">
-			<ion-back-button color="tertiary" text="Atrás" defaultHref="/getit/home"></ion-back-button>
+<ion-header>
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-back-button color="tertiary" defaultHref="/getit/home"></ion-back-button>
 		</ion-buttons>
+    	<ion-title>
+			Publicar
+    	</ion-title>
+  	</ion-toolbar>
+</ion-header>
 
-    	<h2 class="title">Publicar</h2>
-  	</header>
+<ion-content class="ion-padding">
     
 	<form [formGroup]="publicationForm" novalidate>
 

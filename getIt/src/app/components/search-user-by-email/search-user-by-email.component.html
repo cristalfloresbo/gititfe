@@ -17,8 +17,8 @@
 	<ion-list>
 		<ion-card *ngFor="let user of users | filtro: txtToSearch: 'email'">
 			<ion-item href="getit/view-profile/{{user.id}}">
-				<ion-avatar slot="start">
-					<ion-img src="https://www.shankarainfra.com/img/avatar.png"></ion-img>
+			    <ion-avatar slot="start">
+					<ion-img [src]="'data:image/jpeg;base64,' + user.image"> </ion-img>
 				</ion-avatar>
 				<ion-label>
 				  {{ user.email }}

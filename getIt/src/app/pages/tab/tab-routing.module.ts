@@ -34,7 +34,7 @@ const routes: Routes = [
           ),
       },
 	  {
-        path: 'photo-gallery',
+        path: 'photo-gallery/:id',
         children: [
           {
             path: '',

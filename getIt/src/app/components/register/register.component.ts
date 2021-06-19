@@ -6,7 +6,8 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { ShowAlertMessage } from "src/app/helpers/showAlertMessage";
 import { WorkArea } from "src/app/models/workArea.model";
 import * as moment from "moment";
-import { PhotoService} from 'src/app/services/photo.service';
+import { PhotoService } from 'src/app/services/photo.service';
+import * as sha512 from 'js-sha512';
 import { UserPhoto } from "src/app/models/userPhoto.model";
 
 @Component({
@@ -85,6 +86,7 @@ export class RegisterComponent implements OnInit {
 
   saveData() {
     const ag = this.calAge();
+	this.user.controls.password.setValue(sha512.sha512(this.user.controls['password'].value));
     if (ag >= 18) {
       this.createLink();
       this.addImage();
