@@ -1,0 +1,110 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-back-button color="tertiary" defaultHref="/getit/home"></ion-back-button>
+		</ion-buttons>
+    	<ion-title>
+			Publicar
+    	</ion-title>
+  	</ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+    
+	<form [formGroup]="publicationForm" novalidate>
+
+		<ion-fab class="camera" vertical="top" horizontal="center" slot="fixed">
+			<ion-fab-button (click)="addPhotoToGallery()">
+				<ion-icon name="camera"></ion-icon>
+			</ion-fab-button>
+		</ion-fab>
+		<br>
+		<ion-row>
+  			<ion-col text-center>
+    			<ion-label class="img_Label">Agregar Imagen</ion-label>
+  			</ion-col>
+		</ion-row>
+		
+  		<ion-item lines="full">
+        	<ion-label position="floating">
+          		Tipo
+			  	<ion-text color="purple">*</ion-text>
+        	</ion-label>
+        	<ion-select formControlName="typePublication" okText="Aceptar" cancelText="Cancelar">
+          		<ion-select-option value="OFFER">Oferta</ion-select-option>
+          		<ion-select-option value="DEMAND">Demanda</ion-select-option>
+        	</ion-select>
+      	</ion-item>
+      	<ion-label color="danger" *ngIf="isInvalid('typePublication')">
+        	<h6 *ngIf="hasErrorControl('typePublication', 'required')">Este campo es requerido</h6>
+      	</ion-label>
+      	<ion-item lines="full">
+        	<ion-label position="floating">
+          		Área de trabajo
+				<ion-text color="purple">*</ion-text>
+        	</ion-label>
+        	<ion-select formControlName="workAreaId" okText="Aceptar" cancelText="Cancelar">
+          		<ion-select-option *ngFor="let workarea of workareas" value={{workarea.id}}>
+            		{{workarea.name}}
+          		</ion-select-option>
+        	</ion-select>
+      	</ion-item>
+      	<ion-label color="danger" *ngIf="isInvalid('workAreaId')">
+        	<h6 *ngIf="hasErrorControl('workAreaId', 'required')">Este campo es requerido </h6>
+      	</ion-label>
+      	<ion-item lines="full">
+        	<ion-label position="floating">Dirección</ion-label>
+        	<ion-input formControlName="address" type="text" clearInput></ion-input>
+      	</ion-item>
+      	<ion-label color="danger" *ngIf="isInvalid('address')">
+        	<h6 *ngIf="hasErrorControl('address', 'minlength')">
+          		Debe ser mínimo de 10 caracteres
+        	</h6>
+        	<h6 *ngIf="hasErrorControl('address', 'maxlength')">
+          		Debe ser máximo de 50 caracteres
+        	</h6>
+      	</ion-label>
+      	<ion-item lines="full">
+        	<ion-label position="floating">Tiempo Requerido/Ofertado(Días)</ion-label>
+        	<ion-input formControlName="timeRequiredOrOffered" type="number"></ion-input>
+      	</ion-item>
+      	<ion-label color="danger" *ngIf="isInvalid('timeRequiredOrOffered')">
+        	<h6 *ngIf="hasErrorControl('timeRequiredOrOffered', 'min')">
+          		Debe ser mínimo 1 día
+        	</h6>
+      	</ion-label>
+      	<ion-item lines="full">
+        	<ion-label position="floating">Honorario</ion-label>
+        	<ion-input formControlName="tariff" type="number"></ion-input>
+      	</ion-item>
+      	<ion-label color="danger" *ngIf="isInvalid('tariff')">
+        	<h6 *ngIf="hasErrorControl('tariff', 'min')">Debe ser un número positvo</h6>
+      	</ion-label>
+      	<ion-item>
+        	<ion-label position="floating">
+         		Descripción<ion-text color="purple"> *</ion-text>
+        	</ion-label>
+        	<ion-textarea formControlName="description" clearInput></ion-textarea>
+      	</ion-item>
+      	<ion-label color="danger" *ngIf="isInvalid('description')">
+        	<h6 *ngIf="hasErrorControl('description', 'required')">Este campo es requerido</h6>
+        	<h6 *ngIf="hasErrorControl('description', 'minlength')">
+          		Debe ser mínimo de 10 caracteres
+        	</h6>
+        	<h6 *ngIf="hasErrorControl('description', 'maxlength')">
+          		Debe ser máximo de 250 caracteres
+        	</h6>
+      	</ion-label>
+    </form>
+
+    <ion-row>
+      	<ion-col>
+        	<ion-button expand="block" color="secondary" (click)="cancel()">Cancelar</ion-button>
+      	</ion-col>
+      	<ion-col>
+        	<ion-button expand="block" color="primary" type="submit" (click)="save()" [disabled]="!publicationForm.valid">
+          		Aceptar
+        	</ion-button>
+      	</ion-col>
+    </ion-row>
+</ion-content>

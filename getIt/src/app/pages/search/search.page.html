@@ -1,0 +1,8 @@
+<ion-content>
+  <ion-item>
+    <ion-label>Buscar por: </ion-label>
+    <ion-select (ionChange)="redirectTo($event)" okText="Aceptar" cancelText="Cancelar">
+      <ion-select-option *ngFor="let option of searchOptions" value={{option.value}}>{{option.name}}</ion-select-option>
+    </ion-select>
+  </ion-item>
+</ion-content>
