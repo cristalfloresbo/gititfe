@@ -6,8 +6,8 @@ import { HttpErrorResponse } from "@angular/common/http";
 import { ShowAlertMessage } from "src/app/helpers/showAlertMessage";
 import { WorkArea } from "src/app/models/workArea.model";
 import * as moment from "moment";
-import { PhotoService } from 'src/app/services/photo.service';
-
+import { PhotoService} from 'src/app/services/photo.service';
+import { UserPhoto } from "src/app/models/userPhoto.model";
 
 @Component({
   selector: "app-register",
@@ -33,16 +33,17 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit() {
     this.loadWorkAreas();
+    this.photoService.loadSaved();
   }
 
   user = this.formBuilder.group({
     firstname: [
       "",
-      [Validators.required, Validators.minLength(3), Validators.maxLength(50)],
+      [Validators.required, Validators.minLength(3), Validators.maxLength(50), Validators.pattern("[A-Za-z ]*")],
     ],
     lastname: [
       "",
-      [Validators.required, Validators.minLength(3), Validators.maxLength(50)],
+      [Validators.required, Validators.minLength(3), Validators.maxLength(50), Validators.pattern("[A-Za-z ]*")],
     ],
     phone: [
       "",
@@ -71,6 +72,7 @@ export class RegisterComponent implements OnInit {
         ),
       ],
     ],
+    image: [],
   });
 
   async loadWorkAreas() {
@@ -85,6 +87,8 @@ export class RegisterComponent implements OnInit {
     const ag = this.calAge();
     if (ag >= 18) {
       this.createLink();
+      this.addImage();
+      console.log(this.user.value);
       this.apiService.post("/register-user", this.user.value).subscribe(
         (idUser: number) => {
           this.showMessage.showSuccessAlert("¡Se registró exitosamente!");
@@ -129,6 +133,11 @@ export class RegisterComponent implements OnInit {
 
   createLink() {
     this.user.controls.phone.setValue(this.prevPhone + this.auxPhone);
+  }
+
+  addImage(){
+    this.user.controls.image.setValue(this.photoService.getImage());
+    console.log(this.user.controls.image);
   }
 
   clearForm() {

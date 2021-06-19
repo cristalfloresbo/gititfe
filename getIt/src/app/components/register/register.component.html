@@ -30,6 +30,7 @@
 	 	<ion-label class="M1" color="danger" *ngIf="user.controls.firstname.errors?.required && (user.controls.firstname.touched || user.controls.firstname.dirty)">Campo requerido.</ion-label>
 	  	<ion-label class="M1" color="danger" *ngIf="user.controls.firstname.errors?.minlength && (user.controls.firstname.touched || user.controls.firstname.dirty)">Ingrese mínimo 3 caracteres.</ion-label>
 	  	<ion-label class="M1" color="danger" *ngIf="user.controls.firstname.errors?.maxlength && (user.controls.firstname.touched || user.controls.firstname.dirty)">Ingrese máximo 50 caracteres.</ion-label>
+		<ion-label color="danger" *ngIf="user.controls.firstname.errors?.pattern && (user.controls.firstname.touched || user.controls.firstname.dirty)"><p class="M1">Nombre invalido.</p></ion-label>
 
 		<ion-item class="M1">
 			<ion-label position="floating">Apellidos *</ion-label>
@@ -38,6 +39,7 @@
 		<ion-label class="M1" color="danger" *ngIf="user.controls.lastname.errors?.required && (user.controls.lastname.touched || user.controls.lastname.dirty)">Campo requerido.</ion-label>
 		<ion-label class="M1" color="danger" *ngIf="user.controls.lastname.errors?.minlength && (user.controls.lastname.touched || user.controls.lastname.dirty)">Ingrese mínimo 3 caracteres.</ion-label>
 		<ion-label class="M1" color="danger" *ngIf="user.controls.lastname.errors?.maxlength && (user.controls.lastname.touched || user.controls.lastname.dirty)">Ingrese máximo 50 caracteres.</ion-label>
+		<ion-label color="danger" *ngIf="user.controls.lastname.errors?.pattern && (user.controls.lastname.touched || user.controls.lastname.dirty)"><p class="M1">Apellido invalido.</p></ion-label>
 
 		<ion-item class="M1">
 			<ion-label position="floating" >Celular *</ion-label>
@@ -88,14 +90,22 @@
 		<br>
 		<ion-label class="M1" color="danger" *ngIf="user.controls.password.errors?.minlength && (user.controls.password.touched || user.controls.password.dirty)">Ingrese mínimo 8 caracteres.</ion-label>
 		
-		<ion-fab vertical="bottom" horizontal="center" slot="fixed">
+		<br>
+		<br>
+		<br>
+
+		<ion-fab  class="M2" vertical="bottom" horizontal="center" slot="fixed">
 			<ion-fab-button (click)="addPhotoToGallery()">
-			  <ion-icon name="camera"></ion-icon>
+				<ion-icon name="camera"></ion-icon>
 			</ion-fab-button>
+			<h2 class="M3" ><font size="3">Foto de perfil</font></h2>
 		</ion-fab>
 
-		  <br>
-
+		<br>
+		<br>
+		<br>
+		<br>
+		
 		<p class="ion-text-center">
 			<ion-grid>
 				<ion-row>

@@ -12,6 +12,7 @@ import { Platform } from '@ionic/angular';
 export class PhotoService {
   public photos: UserPhoto[] = [];
   private PHOTO_STORAGE: string = 'photos';
+  public image:string = "";
 
   constructor(private platform: Platform) {}
 
@@ -67,7 +68,8 @@ export class PhotoService {
   private async savePicture(cameraPhoto: Photo) {
     // Convert photo to base64 format, required by Filesystem API to save
     const base64Data = await this.readAsBase64(cameraPhoto);
-
+    this.image = base64Data;
+    
     // Write the file to the data directory
     const fileName = new Date().getTime() + '.jpeg';
     const savedFile = await Filesystem.writeFile({
@@ -93,7 +95,9 @@ export class PhotoService {
       };
     }
   }
-
+  getImage(){
+    return (this.image.replace('data:image/jpeg;base64,/','/'));
+  }
   // Read camera photo into base64 format based on the platform the app is running on
   private async readAsBase64(cameraPhoto: Photo) {
     // "hybrid" will detect Cordova or Capacitor
