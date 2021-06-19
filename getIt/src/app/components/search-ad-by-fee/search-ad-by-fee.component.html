@@ -1,0 +1,75 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-back-button color="tertiary" defaultHref="/getit/search"></ion-back-button>
+		</ion-buttons>
+
+		<ion-title>Buscar por Honorarios</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<ion-searchbar (ionChange)="search( $event )"></ion-searchbar>
+	<ion-list>
+    	<ion-card *ngFor="let ad of ads | filtro: txtToSearch: 'fee'">
+			<ion-item href="getit/view-profile/{{ad.user.id}}">
+				<ion-avatar slot="start">
+					<ion-img src="https://www.shankarainfra.com/img/avatar.png"></ion-img>
+				</ion-avatar>
+				<ion-label>
+				  {{ ad.user.email }}
+				</ion-label>
+			</ion-item>
+			<ion-row *ngIf="ad.image != ''">
+				<ion-img height="100%" width="100%" [src]="ad.image" alt="Default"> </ion-img>
+			</ion-row>
+			<ion-card-title></ion-card-title>
+			<ion-card-subtitle></ion-card-subtitle>
+			<ion-card-content>
+				<ion-row>
+					<ion-col>
+						<ion-label>
+							{{ ad.createdAt }}
+						</ion-label>
+					</ion-col>
+				</ion-row>
+				<ion-row>
+					<ion-col>
+						<ion-label>
+							{{ ad.workAreaName }}
+						</ion-label>
+					</ion-col>
+				</ion-row>
+				<ion-row>
+					<ion-col>
+			    		<ion-label>
+							{{ ad.description }}
+			  			</ion-label>
+					</ion-col>
+				</ion-row>
+				<ion-row>
+					<ion-col *ngIf="ad.fee > 0">
+						<ion-label>
+							<p>Bs {{ad.fee}}</p>
+						</ion-label>
+					</ion-col>
+				</ion-row>
+				<ion-row>
+					<ion-col *ngIf="ad.requiredTime > 0">
+						<ion-label>
+							<p>Tiempo requerido: {{ad.requiredTime}} dias</p>
+						</ion-label>
+					</ion-col>
+				</ion-row>
+				<ion-row>
+					<ion-col *ngIf="ad.address != ''">
+						<ion-label>
+							<p>{{ad.address}}</p>
+						</ion-label>
+					</ion-col>
+				</ion-row>
+      		</ion-card-content>
+			<ion-button color="medium" expand="block" href={{ad.user.phone}}>Contactar</ion-button>
+    	</ion-card>
+  	</ion-list>
+</ion-content>
