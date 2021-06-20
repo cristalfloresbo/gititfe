@@ -17,7 +17,7 @@
 				<ion-back-button  text="Atrás" defaultHref="/getit"></ion-back-button>
 			</ion-buttons>
 			<ion-title class="CenterText" color="dark">
-				REGISTRARSE
+				Registrarse
 			</ion-title>
 		</ion-toolbar>
 	</ion-header>
@@ -30,7 +30,7 @@
 	 	<ion-label class="M1" color="danger" *ngIf="user.controls.firstname.errors?.required && (user.controls.firstname.touched || user.controls.firstname.dirty)">Campo requerido.</ion-label>
 	  	<ion-label class="M1" color="danger" *ngIf="user.controls.firstname.errors?.minlength && (user.controls.firstname.touched || user.controls.firstname.dirty)">Ingrese mínimo 3 caracteres.</ion-label>
 	  	<ion-label class="M1" color="danger" *ngIf="user.controls.firstname.errors?.maxlength && (user.controls.firstname.touched || user.controls.firstname.dirty)">Ingrese máximo 50 caracteres.</ion-label>
-		<ion-label color="danger" *ngIf="user.controls.firstname.errors?.pattern && (user.controls.firstname.touched || user.controls.firstname.dirty)"><p class="M1">Nombre invalido.</p></ion-label>
+		<ion-label color="danger" *ngIf="user.controls.firstname.errors?.pattern && (user.controls.firstname.touched || user.controls.firstname.dirty)"><p class="M1">Ingrese solo letras, sin espacios al inicio y final.</p></ion-label>
 
 		<ion-item class="M1">
 			<ion-label position="floating">Apellidos *</ion-label>
@@ -39,7 +39,7 @@
 		<ion-label class="M1" color="danger" *ngIf="user.controls.lastname.errors?.required && (user.controls.lastname.touched || user.controls.lastname.dirty)">Campo requerido.</ion-label>
 		<ion-label class="M1" color="danger" *ngIf="user.controls.lastname.errors?.minlength && (user.controls.lastname.touched || user.controls.lastname.dirty)">Ingrese mínimo 3 caracteres.</ion-label>
 		<ion-label class="M1" color="danger" *ngIf="user.controls.lastname.errors?.maxlength && (user.controls.lastname.touched || user.controls.lastname.dirty)">Ingrese máximo 50 caracteres.</ion-label>
-		<ion-label color="danger" *ngIf="user.controls.lastname.errors?.pattern && (user.controls.lastname.touched || user.controls.lastname.dirty)"><p class="M1">Apellido invalido.</p></ion-label>
+		<ion-label color="danger" *ngIf="user.controls.lastname.errors?.pattern && (user.controls.lastname.touched || user.controls.lastname.dirty)"><p class="M1">Ingrese solo letras, sin espacios al inicio y final.</p></ion-label>
 
 		<ion-item class="M1">
 			<ion-label position="floating" >Celular *</ion-label>
@@ -79,7 +79,7 @@
 			
 		<ion-item class="M1">
 			<ion-label position="floating">Contraseña *</ion-label>
-			<ion-input type="password" formControlName="password"></ion-input>
+			<ion-input type="password" formControlName="password" [(ngModel)]="auxPassword"></ion-input>
 		</ion-item>
 		<ion-label class="M1" color="danger" *ngIf="user.controls.password.errors?.required && (user.controls.password.touched || user.controls.password.dirty)">Campo requerido.</ion-label>
 		<ion-label class="M1" color="danger" *ngIf="user.controls.password.errors?.pattern && (user.controls.password.touched || user.controls.password.dirty)">Contraseña inválida.</ion-label>

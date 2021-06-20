@@ -4,6 +4,7 @@ import { FormBuilder } from "@angular/forms";
 import { ApiService } from "src/app/services/api.service";
 import { HttpErrorResponse } from "@angular/common/http";
 import { ShowAlertMessage } from "src/app/helpers/showAlertMessage";
+import { Avatar } from "src/app/helpers/avatar";
 import { WorkArea } from "src/app/models/workArea.model";
 import * as moment from "moment";
 import { PhotoService } from 'src/app/services/photo.service';
@@ -22,8 +23,12 @@ export class RegisterComponent implements OnInit {
   public mxDate = this.maxDate();
   public prevPhone = "https://wa.me/591";
   public defaultNum = 0;
-  public auxPhone = "";
+  public auxPhone:number;
+  public ePhone:number;
+  public auxPassword = "";
+  public ePassword = "";
   private showMessage = new ShowAlertMessage();
+  private avatar = new Avatar();
   public workareas: WorkArea[] = [];
 
   constructor(
@@ -40,11 +45,11 @@ export class RegisterComponent implements OnInit {
   user = this.formBuilder.group({
     firstname: [
       "",
-      [Validators.required, Validators.minLength(3), Validators.maxLength(50), Validators.pattern("[A-Za-z ]*")],
+      [Validators.required, Validators.minLength(3), Validators.maxLength(50), Validators.pattern("[A-Za-zñÑÀ-ÿ ]*")],
     ],
     lastname: [
       "",
-      [Validators.required, Validators.minLength(3), Validators.maxLength(50), Validators.pattern("[A-Za-z ]*")],
+      [Validators.required, Validators.minLength(3), Validators.maxLength(50), Validators.pattern("[A-Za-zñÑÀ-ÿ ]*")],
     ],
     phone: [
       "",
@@ -86,10 +91,17 @@ export class RegisterComponent implements OnInit {
 
   saveData() {
     const ag = this.calAge();
-	this.user.controls.password.setValue(sha512.sha512(this.user.controls['password'].value));
+    this.ePhone = this.auxPhone;
+    this.ePassword = this.auxPassword;
+	  this.user.controls.password.setValue(sha512.sha512(this.user.controls['password'].value));
     if (ag >= 18) {
       this.createLink();
-      this.addImage();
+      if ((this.photoService.photos.length > 0)) {
+        this.addImage();
+        this.deletePhotoToGallery(this.photoService.photos[0], 0);
+      } else {
+        this.user.controls.image.setValue(this.avatar.getAvatar());
+      }
       console.log(this.user.value);
       this.apiService.post("/register-user", this.user.value).subscribe(
         (idUser: number) => {
@@ -97,12 +109,14 @@ export class RegisterComponent implements OnInit {
           window.location.href = "/getit";
         },
         (error: HttpErrorResponse) => {
+          this.recoverFromError();
           this.showMessage.showErrorAlert(
-            `Ha ocurrido un error: ${error.message}, vuelva a intentarlo`
+            `Ha ocurrido un error, vuelva a intentarlo`
           );
         }
       );
     } else {
+      this.recoverFromError();
       this.showMessage.showError(
         "Tiene que tener por lo menos 18 años para registrarse"
       );
@@ -153,8 +167,17 @@ export class RegisterComponent implements OnInit {
     this.user.controls.password.setValue("");
   }
 
+  recoverFromError(){
+    this.user.controls.phone.setValue(this.ePhone);
+    this.user.controls.password.setValue(this.ePassword);
+  }
+  
   addPhotoToGallery() {
     this.photoService.addNewToGallery();
+  }
+
+  deletePhotoToGallery(photo: UserPhoto, position: number) {
+    this.photoService.deletePicture(photo, position);
   }
 
   private cancel(): void {
