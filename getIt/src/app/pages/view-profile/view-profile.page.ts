@@ -18,7 +18,6 @@ export class ViewProfilePage implements OnInit {
 
   public user;
   public rating;
-  public score;
   public age: number;
   public publications;
   public showAlertMessage = new ShowAlertMessage();
@@ -69,11 +68,7 @@ export class ViewProfilePage implements OnInit {
       for (const index in response) {
         sum += response[index].score;
       }
-      this.rating = (sum / response.length)*10;
-
-      console.log('ddd','width:'+this.rating+'%');
-      this.score = 'width:'+this.rating+'%';
-      
+      this.rating = ((sum / response.length)*10)*2;      
     }, (error: HttpErrorResponse) => {
       this.showAlertMessage.showErrorAlert(error.name);
     });

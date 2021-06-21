@@ -2,17 +2,19 @@
   <header>
     <p>Calificar usuario</p>
   </header>
-  <div class="rating" (click)="rateUser($event)">
+  <div class="rating" (ionChange)="rateUser($event)">
     <ion-range
       min="0"
       max="5"
       pin="true"
       snaps="true"
-      color="primary">
+      color="primary"
+      value={{rating}}>
       <ion-icon size="small" slot="start" name="star" color="primary"></ion-icon>
       <ion-icon slot="end" name="star" color="primary"></ion-icon>
     </ion-range>
   </div>
+
   <ion-grid>
     <ion-row>
       <ion-col>

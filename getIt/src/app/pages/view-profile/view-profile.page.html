@@ -13,13 +13,24 @@
     <p>Dirección: {{user?.address}}</p>
   </div>
 
-  <div class="rating" (click)="rateUser()">
+  <div class="rating">
     <div class="star-ratings-sprite"><span [style]="'width:'+rating+'%'" class="star-ratings-sprite-rating"></span></div>
   </div>
 
-  <ion-fab-button (click)="goPhotoToGallery()">
-    <ion-icon name="add"></ion-icon>
-  </ion-fab-button>  
+  <div class="options">
+    <ion-row>
+      <ion-col>
+          <ion-button size="small" (click)="rateUser()">
+            <ion-icon name="star-half"></ion-icon> Calificar
+          </ion-button>
+      </ion-col>
+      <ion-col>
+          <ion-button size="small" (click)="goPhotoToGallery()">
+            <ion-icon name="add"></ion-icon>Publicar
+          </ion-button>
+      </ion-col>
+     </ion-row> 
+  </div>
 
   <ion-grid>
     <ion-row>
