@@ -62,11 +62,6 @@ export class LoginUserComponent implements OnInit {
     );
   }
 
-  getFormularioRegistro(event: Event) {
-    event.preventDefault();
-    console.log(this.loginForm.value);
-  }
-
   public login() {
     this.apiService.post('login-user', this.loginForm.value).
 	subscribe((response: LoginSuccess) => {
