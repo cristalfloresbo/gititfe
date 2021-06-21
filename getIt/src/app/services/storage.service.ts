@@ -1,5 +1,4 @@
 import { Injectable } from "@angular/core";
-import { isNullOrUndefined } from "util";
 
 @Injectable({
   providedIn: "root",
@@ -24,7 +23,7 @@ export class StorageService {
    */
   public getCurrentObject(): any {
     const CURRENT_OBJ = localStorage.getItem("data");
-    if (!isNullOrUndefined(CURRENT_OBJ)) {
+    if ((CURRENT_OBJ !== null) || (CURRENT_OBJ !== undefined)) {
       const OBJ = JSON.parse(CURRENT_OBJ);
       return OBJ;
     }

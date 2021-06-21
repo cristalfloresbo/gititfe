@@ -1,6 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 import { ApiService } from "src/app/services/api.service";
 import { ShowAlertMessage } from "src/app/helpers/showAlertMessage";
 import { Publication } from "src/app/models/publication.model";
@@ -24,7 +24,7 @@ export class PublishOfferAndDemandPage implements OnInit {
   constructor(
     public formBuilder: FormBuilder,
     private apiService: ApiService,
-    private route: Router,	
+    private router: Router,	
 	public photoService: PhotoService,
 	public actionSheetController: ActionSheetController,
   ) {}
@@ -75,6 +75,7 @@ export class PublishOfferAndDemandPage implements OnInit {
 			);
 		});
 		this.deletePhotoToGallery(this.photoService.photos[0], 0);
+		this.router.navigate(['/getit/home']);
 	} else {
 		this.publication.image = "";
 		this.apiService.post("publication", this.publication)
@@ -83,6 +84,7 @@ export class PublishOfferAndDemandPage implements OnInit {
 				"Publicación registrada exitosamente"
 			);
 		});
+		this.router.navigate(['/getit/home']);
 	}
 	this.clearPublicationForm();
   }
@@ -107,7 +109,7 @@ export class PublishOfferAndDemandPage implements OnInit {
     this.publicationForm = this.formBuilder.group({
       typePublication: ["", [Validators.required]],
       workAreaId: ["", [Validators.required]],
-      address: ["", [Validators.maxLength(50), Validators.minLength(10)]],
+      address: ["", [Validators.maxLength(250), Validators.minLength(10)]],
       timeRequiredOrOffered: ["", [Validators.min(1)]],
       tariff: ["", [Validators.min(1)]],
       description: [
