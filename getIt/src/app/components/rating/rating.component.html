@@ -1,20 +1,26 @@
-<ion-content>
-  <div class="card-center">
-    <ion-button class="close" (click)="close()" fill=“clear”>Cerrar</ion-button>
-    <ion-card mode="ios">
-      <h2>Calificar usuario</h2>
-      <div class="rating">
-        <ion-range (ionChange)="rateUser($event)"
-          min="0"
-          max="5"
-          pin="true"
-          snaps="true"
-          color="primary"
-          value={{rating}}>
-          <ion-icon size="small" slot="start" name="star" color="primary"></ion-icon>
-          <ion-icon slot="end" name="star" color="primary"></ion-icon>
-        </ion-range>
-      </div>
-    </ion-card>
+<ion-content padding>
+  <header>
+    <p>Calificar usuario</p>
+  </header>
+  <div class="rating" (click)="rateUser($event)">
+    <ion-range
+      min="0"
+      max="5"
+      pin="true"
+      snaps="true"
+      color="primary">
+      <ion-icon size="small" slot="start" name="star" color="primary"></ion-icon>
+      <ion-icon slot="end" name="star" color="primary"></ion-icon>
+    </ion-range>
   </div>
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-button (click)="cancel()" color="secondary" expand="block">Cancelar</ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button (click)="save()" color="primary" expand="block" type="submit">Aceptar</ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

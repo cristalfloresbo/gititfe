@@ -9,26 +9,17 @@
     <p>Nombres y Apellidos: {{user?.firstname}} {{user?.lastname}}</p>
     <p>Área de Trabajo: {{user?.workArea.name}}</p>
     <p>Contacto: <a href="{{user?.phone}}">{{user?.phone}}</a></p>
-    <p>Edad: {{age}}</p>
+    <p>Edad: {{age}} años</p>
     <p>Dirección: {{user?.address}}</p>
   </div>
+
   <div class="rating" (click)="rateUser()">
-    <ion-range
-      min="0"
-      max="5"
-      pin="true"
-      snaps="true"
-      color="primary"
-      disabled="true"
-      value={{rating}}>
-      <ion-icon size="small" slot="start" name="star" color="primary"></ion-icon>
-      <ion-icon slot="end" name="star" color="primary"></ion-icon>
-    </ion-range>
+    <div class="star-ratings-sprite"><span [style]="'width:'+rating+'%'" class="star-ratings-sprite-rating"></span></div>
   </div>
 
   <ion-fab-button (click)="goPhotoToGallery()">
-	<ion-icon name="add"></ion-icon>
-  </ion-fab-button>
+    <ion-icon name="add"></ion-icon>
+  </ion-fab-button>  
 
   <ion-grid>
     <ion-row>

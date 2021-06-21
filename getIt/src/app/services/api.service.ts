@@ -27,7 +27,7 @@ export class ApiService {
     );
   }
 
-  public getById<T>(dir: string, id: number): Observable<T> {
+  public getById<T>(dir: string, id: any): Observable<T> {
     return this.http.get<T>(`${environment.api_url}/${dir}/${id}`);
   }
 

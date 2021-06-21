@@ -1,14 +1,13 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ModalController } from '@ionic/angular';
 import * as moment from 'moment';
-import { ApiService } from 'src/app/services/api.service';
 import { RatingComponent } from 'src/app/components/rating/rating.component';
 import { ViewPublicationComponent } from 'src/app/components/view-publication/view-publication.component';
 import { ShowAlertMessage } from 'src/app/helpers/showAlertMessage';
 import { Rating } from 'src/app/models/rating.model';
-import { UserModel } from 'src/app/models/user.model';
+import { ApiService } from 'src/app/services/api.service';
 
 @Component({
   selector: 'app-view-profile',
@@ -19,18 +18,20 @@ export class ViewProfilePage implements OnInit {
 
   public user;
   public rating;
+  public score;
   public age: number;
   public publications;
   public showAlertMessage = new ShowAlertMessage();
 
-  constructor(private apiService: ApiService, private router: Router, private route: ActivatedRoute, private modalCtrl: ModalController) { }
+  constructor(private apiService: ApiService, private route: ActivatedRoute,
+              private router: Router, private modalCtrl: ModalController) {}
 
   ngOnInit() {
     this.getUser();
   }
 
   public getUser() {
-    this.apiService.getById<UserModel>('user', this.route.snapshot.params.id).subscribe(response => {
+    this.apiService.getById<any>('user', this.route.snapshot.params.id).subscribe(response => {
       this.user = response;
       this.getRating();
       this.getPublications();
@@ -68,7 +69,11 @@ export class ViewProfilePage implements OnInit {
       for (const index in response) {
         sum += response[index].score;
       }
-      this.rating = sum / response.length;
+      this.rating = (sum / response.length)*10;
+
+      console.log('ddd','width:'+this.rating+'%');
+      this.score = 'width:'+this.rating+'%';
+      
     }, (error: HttpErrorResponse) => {
       this.showAlertMessage.showErrorAlert(error.name);
     });
@@ -85,4 +90,5 @@ export class ViewProfilePage implements OnInit {
   public goPhotoToGallery() {
 	  this.router.navigate(['getit/photo-gallery/',  this.route.snapshot.params.id]);
   }
+
 }

@@ -2,7 +2,7 @@
   <ion-slides pager>
     <ion-slide *ngFor="let publication of publicationList">
       <ion-card mode="ios">
-        <ion-button class="close" (click)="close()" fill=“clear”>Cerrar</ion-button>
+        <ion-button color="secondary" class="close" (click)="close()" fill="clear">Cerrar</ion-button>
         <ion-img [src]="publication.image"></ion-img>
         <div class="description">
           <b>{{createdAt}}</b>

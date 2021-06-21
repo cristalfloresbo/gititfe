@@ -73,6 +73,7 @@ export class PublishOfferAndDemandPage implements OnInit {
 			this.showMessage.showSuccessAlert(
 				"Publicación registrada exitosamente"
 			);
+      this.route.navigate(['getit/home/']);
 		});
 		this.deletePhotoToGallery(this.photoService.photos[0], 0);
 	} else {
