@@ -1,0 +1,29 @@
+<ion-header>
+	<ion-toolbar>
+		<ion-buttons slot="start">
+			<ion-back-button color="tertiary" defaultHref="/getit/search"></ion-back-button>
+		</ion-buttons>
+		
+		<ion-title>Buscar por Email</ion-title>
+	</ion-toolbar>
+
+	<ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+</ion-header>
+
+<ion-content>
+	<ion-searchbar (ionChange)="search( $event )"></ion-searchbar>
+	<ion-list>
+		<ion-card *ngFor="let user of users | filtro: txtToSearch: 'email'">
+			<ion-item href="getit/view-profile/{{user.id}}">
+			    <ion-avatar slot="start">
+					<ion-img [src]="'data:image/jpeg;base64,' + user.image"> </ion-img>
+				</ion-avatar>
+				<ion-label>
+				  {{ user.email }}
+				</ion-label>
+			</ion-item>
+		</ion-card>
+	</ion-list>
+</ion-content>

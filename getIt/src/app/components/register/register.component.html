@@ -1,0 +1,123 @@
+<ion-header class="ion-text-center">
+	<ion-toolbar color="tertiary">
+		<ion-buttons slot="start">
+			<ion-back-button></ion-back-button>
+		</ion-buttons>
+		<ion-title color="light">
+			GET IT
+		</ion-title>
+	</ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+	<ion-header class="ion-text-center">
+		<ion-toolbar class="ion-text-center">
+			<ion-buttons slot="start">
+				<ion-back-button  text="Atrás" defaultHref="/getit"></ion-back-button>
+			</ion-buttons>
+			<ion-title class="CenterText" color="dark">
+				Registrarse
+			</ion-title>
+		</ion-toolbar>
+	</ion-header>
+
+	<form class="M1" [formGroup]="user" (ngSubmit)="saveData()" novalidate>
+		<ion-item class="M1">
+			<ion-label position="floating">Nombre *</ion-label>
+			<ion-input formControlName="firstname"></ion-input>
+	  	</ion-item>
+	 	<ion-label class="M1" color="danger" *ngIf="user.controls.firstname.errors?.required && (user.controls.firstname.touched || user.controls.firstname.dirty)">Campo requerido.</ion-label>
+	  	<ion-label class="M1" color="danger" *ngIf="user.controls.firstname.errors?.minlength && (user.controls.firstname.touched || user.controls.firstname.dirty)">Ingrese mínimo 3 caracteres.</ion-label>
+	  	<ion-label class="M1" color="danger" *ngIf="user.controls.firstname.errors?.maxlength && (user.controls.firstname.touched || user.controls.firstname.dirty)">Ingrese máximo 50 caracteres.</ion-label>
+		<ion-label color="danger" *ngIf="user.controls.firstname.errors?.pattern && (user.controls.firstname.touched || user.controls.firstname.dirty)"><p class="M1">Ingrese solo letras, sin espacios al inicio y final.</p></ion-label>
+
+		<ion-item class="M1">
+			<ion-label position="floating">Apellidos *</ion-label>
+			<ion-input formControlName="lastname"></ion-input>
+		</ion-item>
+		<ion-label class="M1" color="danger" *ngIf="user.controls.lastname.errors?.required && (user.controls.lastname.touched || user.controls.lastname.dirty)">Campo requerido.</ion-label>
+		<ion-label class="M1" color="danger" *ngIf="user.controls.lastname.errors?.minlength && (user.controls.lastname.touched || user.controls.lastname.dirty)">Ingrese mínimo 3 caracteres.</ion-label>
+		<ion-label class="M1" color="danger" *ngIf="user.controls.lastname.errors?.maxlength && (user.controls.lastname.touched || user.controls.lastname.dirty)">Ingrese máximo 50 caracteres.</ion-label>
+		<ion-label color="danger" *ngIf="user.controls.lastname.errors?.pattern && (user.controls.lastname.touched || user.controls.lastname.dirty)"><p class="M1">Ingrese solo letras, sin espacios al inicio y final.</p></ion-label>
+
+		<ion-item class="M1">
+			<ion-label position="floating" >Celular *</ion-label>
+			<ion-input type="number" formControlName="phone" [(ngModel)]="auxPhone"></ion-input>
+		</ion-item>
+		<ion-label class="M1" color="danger" *ngIf="user.controls.phone.errors?.required && (user.controls.phone.touched || user.controls.phone.dirty)">Campo requerido.</ion-label>
+		<ion-label class="M1" color="danger" *ngIf="user.controls.phone.errors?.min && (user.controls.phone.touched || user.controls.phone.dirty)">Ingrese un número de 8 dígitos.</ion-label>
+		<ion-label class="M1" color="danger" *ngIf="user.controls.phone.errors?.max && (user.controls.phone.touched || user.controls.phone.dirty)">Ingrese un número de 8 dígitos.</ion-label>
+		
+		<ion-item class="M1">
+			<ion-label position="floating" >Fecha de Nacimiento * </ion-label>
+			<ion-datetime [min]="mDate" [max]="mxDate" (ionChange)="getDate($event)" formControlName="birthdate" [(ngModel)]="ultDate" [value]="defaultDate" placeholder="Presiona Aquí" doneText="Aceptar" cancelText="Cancelar"></ion-datetime>
+		</ion-item>
+		<ion-label class="M1" color="danger" *ngIf="user.controls.birthdate.errors?.required && (user.controls.birthdate.touched || user.controls.birthdate.dirty)">Campo requerido.</ion-label>
+
+
+		<ion-item class="M1">
+			<ion-label position="floating">Dirección</ion-label>
+			<ion-input formControlName="address"></ion-input>
+		</ion-item>
+		<ion-label class="M1" color="danger" *ngIf="user.controls.address.errors?.minlength && (user.controls.address.touched || user.controls.address.dirty)">Ingrese mínimo 10 caracteres.</ion-label>
+		<ion-label class="M1" color="danger" *ngIf="user.controls.address.errors?.maxlength && (user.controls.address.touched || user.controls.address.dirty)">Ingrese máximo 50 caracteres.</ion-label>
+		
+		<ion-item class="M1">
+			<ion-label position="floating">Area de trabajo </ion-label>
+			<ion-select formControlName="workAreaId" multiple="true" okText="Aceptar" cancelText="Cancelar">
+			  <ion-select-option *ngFor="let workarea of workareas" value={{workarea.id}}>{{workarea.name}}</ion-select-option>
+			</ion-select>
+		</ion-item>
+
+		<ion-item class="M1">
+			<ion-label position="floating">Email *</ion-label>
+			<ion-input formControlName="email"></ion-input>
+		</ion-item>
+		<ion-label class="M1" color="danger" *ngIf="user.controls.email.errors?.pattern && (user.controls.email.touched || user.controls.email.dirty)">Email inválido.</ion-label>
+		<ion-label class="M1" color="danger" *ngIf="user.controls.email.errors?.required && (user.controls.email.touched || user.controls.email.dirty)">Campo requerido.</ion-label>
+			
+		<ion-item class="M1">
+			<ion-label position="floating">Contraseña *</ion-label>
+			<ion-input type="password" formControlName="password" [(ngModel)]="auxPassword"></ion-input>
+		</ion-item>
+		<ion-label class="M1" color="danger" *ngIf="user.controls.password.errors?.required && (user.controls.password.touched || user.controls.password.dirty)">Campo requerido.</ion-label>
+		<ion-label class="M1" color="danger" *ngIf="user.controls.password.errors?.pattern && (user.controls.password.touched || user.controls.password.dirty)">Contraseña inválida.</ion-label>
+		<br>
+		<ion-label class="M1" color="danger" *ngIf="user.controls.password.errors?.pattern && (user.controls.password.touched || user.controls.password.dirty)">Por lo menos una mayúscula,</ion-label>
+		<br>
+		<ion-label class="M1" color="danger" *ngIf="user.controls.password.errors?.pattern && (user.controls.password.touched || user.controls.password.dirty)">una minúscula y un número.</ion-label>
+		<br>
+		<ion-label class="M1" color="danger" *ngIf="user.controls.password.errors?.minlength && (user.controls.password.touched || user.controls.password.dirty)">Ingrese mínimo 8 caracteres.</ion-label>
+		
+		<br>
+		<br>
+		<br>
+
+		<ion-fab  class="M2" vertical="bottom" horizontal="center" slot="fixed">
+			<ion-fab-button (click)="addPhotoToGallery()">
+				<ion-icon name="camera"></ion-icon>
+			</ion-fab-button>
+			<h2 class="M3" ><font size="3">Foto de perfil</font></h2>
+		</ion-fab>
+
+		<br>
+		<br>
+		<br>
+		<br>
+		
+		<p class="ion-text-center">
+			<ion-grid>
+				<ion-row>
+					<ion-col>
+					  <ion-button (click)="cancel()" color="secondary" expand="block">Cancelar</ion-button>
+					</ion-col>
+					<ion-col>
+					  <ion-button color="primary" expand="block" type="submit" [disabled]="!user.valid">Aceptar</ion-button>
+					</ion-col>
+				</ion-row>
+			</ion-grid>
+		</p>   
+	</form>
+</ion-content>
+	
