@@ -63,7 +63,7 @@ export class LoginUserComponent implements OnInit {
   }
 
   public login() {
-    this.apiService.post('login-user', this.loginForm.value).
+    this.apiService.post('login', this.loginForm.value).
 	subscribe((response: LoginSuccess) => {
 		this.storageService.setCurrentObject(response.token);
 		this.apiService.getById('user', response.id)
@@ -71,7 +71,7 @@ export class LoginUserComponent implements OnInit {
 			this.user = response;
 		});
 		this.showAlert.showSuccessAlert(`Inicio de sesion exitoso`);
-		this.router.navigate(['/getit/home']);
+		this.router.navigate(['getit/home']);
 	}, (error: HttpErrorResponse) => {
       this.showAlert.showErrorAlert("datos incorrectos, vuelva a intentarlo");
     });
