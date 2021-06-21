@@ -1,7 +1,0 @@
-{
-  "name": "getIt",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular"
-}
