@@ -83,6 +83,7 @@ export class PublishOfferAndDemandPage implements OnInit {
 			this.showMessage.showSuccessAlert(
 				"Publicación registrada exitosamente"
 			);
+      window.location.reload();
 		});
 	}
 	this.clearPublicationForm();
