@@ -17,6 +17,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 
 export class PhotoGalleryPage {
+  public userId;
   public postForm: FormGroup;
   private photoGallery: IPhotoGallery = {
 	image: "",
@@ -37,6 +38,7 @@ export class PhotoGalleryPage {
 
   async ngOnInit() {
 	this.createPostForm();
+  this.userId = this.route.snapshot.params.id;
 	await this.photoService.loadSaved();
   }
 

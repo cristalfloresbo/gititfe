@@ -6,6 +6,7 @@ import { Component, OnInit } from "@angular/core";
   styleUrls: ["./tab.page.scss"],
 })
 export class TabPage implements OnInit {
+  public currentUserId = 1;
   constructor() {}
 
   public ngOnInit() {}

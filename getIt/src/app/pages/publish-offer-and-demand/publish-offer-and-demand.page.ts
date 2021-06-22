@@ -73,6 +73,8 @@ export class PublishOfferAndDemandPage implements OnInit {
 			this.showMessage.showSuccessAlert(
 				"Publicación registrada exitosamente"
 			);
+      window.location.reload();
+      this.route.navigate(['getit/home/']);
 		});
 		this.deletePhotoToGallery(this.photoService.photos[0], 0);
 	} else {
@@ -82,6 +84,8 @@ export class PublishOfferAndDemandPage implements OnInit {
 			this.showMessage.showSuccessAlert(
 				"Publicación registrada exitosamente"
 			);
+      window.location.reload();
+      this.route.navigate(['getit/home/']);
 		});
 	}
 	this.clearPublicationForm();

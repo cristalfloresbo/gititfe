@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { ApiService } from "src/app/services/api.service";
 import { WorkArea } from "src/app/models/workArea.model";
 import { Ad } from "../../models/ad.model";
+import * as moment from "moment";
 
 @Component({
   selector: "app-search-ad-by-workarea",
@@ -29,6 +30,9 @@ export class SearchAdByWorkareaComponent implements OnInit {
       .getByParams<Ad[]>("publications", { workarea: event.target.value })
       .subscribe((response) => {
         this.ads = response;
+        for (let i in this.ads) {
+          this.ads[i].createdAt = moment(this.ads[i].createdAt).format('LLL');       
+        }
       });
   }
 }
