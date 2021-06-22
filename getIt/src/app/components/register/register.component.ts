@@ -83,7 +83,7 @@ export class RegisterComponent implements OnInit {
 
   async loadWorkAreas() {
     await this.apiService
-      .getAll<WorkArea[]>("/workareas")
+	  .getAllWithoutHeaders<WorkArea[]>("workareas")
       .subscribe((response) => {
         this.workareas = response;
       });

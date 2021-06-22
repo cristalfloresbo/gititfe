@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from "@angular/forms";
 import { LoginSuccess } from "src/app/models/login.model";
-import { User } from "src/app/models/user.model";
 import { Router } from '@angular/router';
 import { ApiService } from "src/app/services/api.service";
 import { ShowAlertMessage } from 'src/app/helpers/showAlertMessage';
@@ -19,7 +18,6 @@ export class LoginUserComponent implements OnInit {
 		email: new FormControl(''),
 		password: new FormControl(''),
 	});
-	user: User;
 	private showAlert = new ShowAlertMessage();
 	constructor(
 		public formBuilder: FormBuilder,
@@ -53,16 +51,13 @@ export class LoginUserComponent implements OnInit {
 		return this.loginForm.controls[formControlName].errors[errorType];
 	}
 	
-	public login() {
-		this.apiService.postWithoutHeaders('login', this.loginForm.value)
+	public async login() {
+		await this.apiService.postWithoutHeaders('login', this.loginForm.value)
 		.subscribe((response: LoginSuccess) => {
 			this.storageService.setCurrentObject(response.token);
 			this.showAlert.showSuccessAlert("Bienvenido..!");
-			this.apiService.getById('user', response.id)
-			.subscribe((response: User) => {
-				this.user = response;
-			})
 			this.router.navigate(['/getit/home']);
+			window.location.reload();
 		}, 
 		(error: HttpErrorResponse) => {
 			this.showAlert.showErrorAlert("Datos incorrectos, vuelva a intentarlo");

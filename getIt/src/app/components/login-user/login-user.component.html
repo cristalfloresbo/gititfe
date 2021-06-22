@@ -38,7 +38,7 @@
 					<ion-button color="secondary" expand="block">Cancelar</ion-button>
 				</ion-col>
 				<ion-col>
-					<ion-button color="primary" expand="block" type="submit" (click)="login()" >Aceptar</ion-button>
+					<ion-button color="primary" expand="block" type="submit" (click)="login()" [disabled]="!loginForm.valid">Aceptar</ion-button>
 				</ion-col>
 			</ion-row>
 		</ion-grid>

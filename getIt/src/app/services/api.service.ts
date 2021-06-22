@@ -27,6 +27,10 @@ export class ApiService {
     return this.http.get<T>(`${environment.api_url}/${dir}`, {headers: this.httpHeaders});
   }
 
+  public getAllWithoutHeaders<T>(dir: string): Observable<T> {
+    return this.http.get<T>(`${environment.api_url}/${dir}`);
+  }
+
   public getByParams<T>(dir: string, params: object): Observable<T> {
     return this.http.get<T>(
       `${
@@ -48,7 +52,7 @@ export class ApiService {
     return this.http.put<any>(`${environment.api_url}/${dir}`, model);
   }
 
-  public postWithoutHeaders(dir: string, model: object): Observable<any> {
-    return this.http.post<any>(dir, model);
+  public postWithoutHeaders<T>(dir: string, model: object): Observable<T> {
+    return this.http.post<T>(`${environment.api_url}/${dir}`, model);
   }
 }

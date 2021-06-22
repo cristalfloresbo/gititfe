@@ -9,7 +9,7 @@
 </ion-header>
 
 <ion-content>
-	<ion-searchbar (ionChange)="search( $event )" placeholder="Filtrar por direccion"></ion-searchbar>
+	<ion-searchbar class="search" (ionChange)="search( $event )" placeholder="Filtrar por direccion"></ion-searchbar>
 	<ion-list>
     	<ion-card *ngFor="let ad of ads | filtro: txtToSearch: 'address'">
 			<ion-item href="getit/view-profile/{{ad.user.id}}">
