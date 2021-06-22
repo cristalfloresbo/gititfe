@@ -66,21 +66,31 @@
           		Debe ser máximo de 50 caracteres
         	</h6>
       	</ion-label>
-      	<ion-item lines="full">
+      		<ion-item lines="full">
         	<ion-label position="floating">Tiempo Requerido/Ofertado(Días)</ion-label>
-        	<ion-input formControlName="timeRequiredOrOffered" type="number"></ion-input>
+        	<ion-input type="number" formControlName="timeRequiredOrOffered" ></ion-input>
       	</ion-item>
       	<ion-label color="danger" *ngIf="isInvalid('timeRequiredOrOffered')">
         	<h6 *ngIf="hasErrorControl('timeRequiredOrOffered', 'min')">
           		Debe ser mínimo 1 día
         	</h6>
+		</ion-label>
+		<ion-label color="danger" *ngIf="isInvalid('timeRequiredOrOffered')">
+			<h6 *ngIf="hasErrorControl('timeRequiredOrOffered', 'pattern')">
+				Ingrese solo números
+			</h6>
       	</ion-label>
       	<ion-item lines="full">
         	<ion-label position="floating">Honorario</ion-label>
-        	<ion-input formControlName="tariff" type="number"></ion-input>
+        	<ion-input type="number" formControlName="tariff" ></ion-input>
       	</ion-item>
       	<ion-label color="danger" *ngIf="isInvalid('tariff')">
         	<h6 *ngIf="hasErrorControl('tariff', 'min')">Debe ser un número positvo</h6>
+      	</ion-label>
+		<ion-label color="danger" *ngIf="isInvalid('timeRequiredOrOffered')">
+			<h6 *ngIf="hasErrorControl('timeRequiredOrOffered', 'pattern')">
+				Ingrese solo números
+			</h6>
       	</ion-label>
       	<ion-item>
         	<ion-label position="floating">
