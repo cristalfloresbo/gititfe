@@ -106,7 +106,7 @@ export class RegisterComponent implements OnInit {
       this.apiService.post("/register-user", this.user.value).subscribe(
         (idUser: number) => {
           this.showMessage.showSuccessAlert("¡Se registró exitosamente!");
-          window.location.href = "/getit";
+          window.location.href = "/getit/home";
         },
         (error: HttpErrorResponse) => {
           this.recoverFromError();

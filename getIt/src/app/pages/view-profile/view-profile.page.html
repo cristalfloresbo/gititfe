@@ -7,31 +7,31 @@
   </div>
   <div class="personal-information">
     <p>Nombres y Apellidos: {{user?.firstname}} {{user?.lastname}}</p>
-    <p>Área de Trabajo: {{user?.workArea.name}}</p>
+    <div *ngIf="user?.workAreas.length > 0">
+      <p>Área(s) de Trabajo: {{workAreas}}</p>
+    </div>
     <p>Contacto: <a href="{{user?.phone}}">{{user?.phone}}</a></p>
     <p>Edad: {{age}} años</p>
-    <p>Dirección: {{user?.address}}</p>
+    <div *ngIf="user?.address">
+      <p>Dirección: {{user?.address}}</p>
+    </div>
   </div>
 
   <div class="rating">
     <div class="star-ratings-sprite"><span [style]="'width:'+rating+'%'" class="star-ratings-sprite-rating"></span></div>
   </div>
 
-  <div class="options">
-    <ion-row>
-      <ion-col>
-          <ion-button size="small" (click)="rateUser()">
-            <ion-icon name="star-half"></ion-icon> Calificar
-          </ion-button>
-      </ion-col>
-      <ion-col>
-          <ion-button size="small" (click)="goPhotoToGallery()">
-            <ion-icon name="add"></ion-icon>Publicar
-          </ion-button>
-      </ion-col>
-     </ion-row> 
+  <div class="button" *ngIf="currentUser == userId">
+    <ion-button size="small" (click)="goPhotoToGallery()">
+      <ion-icon name="add"></ion-icon>Publicar
+    </ion-button>
   </div>
-
+  <div class="button" *ngIf="currentUser != userId">
+    <ion-button size="small" (click)="rateUser()">
+      <ion-icon name="star-half"></ion-icon> Calificar
+    </ion-button>
+  </div>
+ 
   <ion-grid>
     <ion-row>
       <ion-col size="4" no-padding no-margin *ngFor="let publication of publications;">

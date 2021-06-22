@@ -17,9 +17,12 @@ import { ApiService } from 'src/app/services/api.service';
 export class ViewProfilePage implements OnInit {
 
   public user;
+  public userId;
+  public currentUser = 1;
   public rating;
   public age: number;
   public publications;
+  public workAreas = '';
   public showAlertMessage = new ShowAlertMessage();
 
   constructor(private apiService: ApiService, private route: ActivatedRoute,
@@ -27,11 +30,14 @@ export class ViewProfilePage implements OnInit {
 
   ngOnInit() {
     this.getUser();
+    this.userId = this.route.snapshot.params.id;
   }
 
   public getUser() {
     this.apiService.getById<any>('user', this.route.snapshot.params.id).subscribe(response => {
       this.user = response;
+      console.log('uuu', this.user);
+      this.getWorkAreas();
       this.getRating();
       this.getPublications();
       this.age = moment(new Date()).diff(moment(this.user.birthdate), 'years');
@@ -86,4 +92,9 @@ export class ViewProfilePage implements OnInit {
 	  this.router.navigate(['getit/photo-gallery/',  this.route.snapshot.params.id]);
   }
 
+  public getWorkAreas() {
+    for (let i in this.user.workAreas) {
+      this.workAreas += '-' + this.user.workAreas[i].name;
+    }
+  }
 }
