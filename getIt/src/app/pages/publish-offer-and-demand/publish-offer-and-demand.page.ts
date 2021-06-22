@@ -24,7 +24,7 @@ export class PublishOfferAndDemandPage implements OnInit {
   constructor(
     public formBuilder: FormBuilder,
     private apiService: ApiService,
-    private router: Router,	
+    private route: Router,	
 	public photoService: PhotoService,
 	public actionSheetController: ActionSheetController,
   ) {}
@@ -73,9 +73,11 @@ export class PublishOfferAndDemandPage implements OnInit {
 			this.showMessage.showSuccessAlert(
 				"Publicación registrada exitosamente"
 			);
+      window.location.reload();
+      this.route.navigate(['getit/home/']);
 		});
 		this.deletePhotoToGallery(this.photoService.photos[0], 0);
-		this.router.navigate(['/getit/home']);
+		this.route.navigate(['/getit/home']);
 	} else {
 		this.publication.image = "";
 		this.apiService.post("publication", this.publication)
@@ -83,8 +85,9 @@ export class PublishOfferAndDemandPage implements OnInit {
 			this.showMessage.showSuccessAlert(
 				"Publicación registrada exitosamente"
 			);
+			window.location.reload();
 		});
-		this.router.navigate(['/getit/home']);
+		this.route.navigate(['/getit/home']);
 	}
 	this.clearPublicationForm();
   }

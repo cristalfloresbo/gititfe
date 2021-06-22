@@ -1,9 +1,32 @@
+header {
+    padding-top: 60%;
+    padding-bottom: 10%;
+    text-align: center;
+    font-weight: bold;
+    font-size: 32px;
+}
+
+ion-grid {
+    padding: 10%;
+}
+
+ion-col {
+    padding: 2%;
+}
+.my-custom-modal-css {
+    --background: transparent !important;
+}
+
 
 .card-center {
-    text-align: center;
-    padding-top: 60%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
+
 .rating {
+    padding: 5%;
     margin: 5%;
     text-align: center;
     border: 2px solid #E5E5E5;
@@ -11,8 +34,49 @@
     border-radius: 5px;
 }
 
+
 .close {
     position: absolute;
     left: 80%;
     width: 65px;
+}
+
+*{
+    margin: 0;
+    padding: 0;
+}
+.rate {
+    float: left;
+    height: 46px;
+    padding: 0 10px;
+}
+.rate:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+}
+.rate:not(:checked) > label {
+    float:right;
+    width:1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:50px;
+    color:#6D6D6D;
+}
+.rate:not(:checked) > label:before {
+    content: '★ ';
+}
+.rate > input:checked ~ label {
+    color: #3730A3;    
+}
+.rate:not(:checked) > label:hover,
+.rate:not(:checked) > label:hover ~ label {
+    color: #3730A3;  
+}
+.rate > input:checked + label:hover,
+.rate > input:checked + label:hover ~ label,
+.rate > input:checked ~ label:hover,
+.rate > input:checked ~ label:hover ~ label,
+.rate > label:hover ~ input:checked ~ label {
+    color: #3730A3;
 }

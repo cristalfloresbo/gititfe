@@ -53,11 +53,6 @@ export class LoginUserComponent implements OnInit {
 		return this.loginForm.controls[formControlName].errors[errorType];
 	}
 	
-	getFormularioRegistro(event: Event) {
-		event.preventDefault();
-		console.log("d", this.loginForm.value);
-	}
-	
 	public login() {
 		this.apiService.postWithoutHeaders('login', this.loginForm.value)
 		.subscribe((response: LoginSuccess) => {
@@ -72,5 +67,9 @@ export class LoginUserComponent implements OnInit {
 		(error: HttpErrorResponse) => {
 			this.showAlert.showErrorAlert("Datos incorrectos, vuelva a intentarlo");
 		});
+	}
+
+	public registerUser() {
+		this.router.navigate(['/register']);
 	}
 }

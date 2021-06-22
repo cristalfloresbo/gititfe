@@ -102,11 +102,10 @@ export class RegisterComponent implements OnInit {
       } else {
         this.user.controls.image.setValue(this.avatar.getAvatar());
       }
-      console.log(this.user.value);
-      this.apiService.post("/register-user", this.user.value).subscribe(
+      this.apiService.postWithoutHeaders("/register-user", this.user.value).subscribe(
         (idUser: number) => {
           this.showMessage.showSuccessAlert("¡Se registró exitosamente!");
-          window.location.href = "/getit";
+          window.location.href = "/getit/home";
         },
         (error: HttpErrorResponse) => {
           this.recoverFromError();

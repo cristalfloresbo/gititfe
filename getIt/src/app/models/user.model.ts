@@ -9,7 +9,6 @@ export interface User {
   address: string;
   workArea: WorkArea;
   image: string;
-  score: number;
   email: string;
 }
 
@@ -21,7 +20,6 @@ export interface Users {
   bithdate: string;
   address: string;
   workAreaId: number;
-  score: number;
   email: string;
   image: string;
 }
@@ -34,7 +32,6 @@ export interface UserModel {
     birthdate: Date;
     address: string;
     workArea: WorkArea;
-    score: number;
     email: string;
     list: Array<any>;
 }
