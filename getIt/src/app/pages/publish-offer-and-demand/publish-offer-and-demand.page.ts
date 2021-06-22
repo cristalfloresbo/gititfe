@@ -114,8 +114,8 @@ export class PublishOfferAndDemandPage implements OnInit {
       typePublication: ["", [Validators.required]],
       workAreaId: ["", [Validators.required]],
       address: ["", [Validators.maxLength(250), Validators.minLength(10)]],
-      timeRequiredOrOffered: ["", [Validators.min(1)]],
-      tariff: ["", [Validators.min(1)]],
+      timeRequiredOrOffered: ["", [Validators.min(1), Validators.pattern("[0-9]*")]],
+      tariff: ["", [Validators.min(1), Validators.pattern("[0-9]*")]],
       description: [
         "",
         [
