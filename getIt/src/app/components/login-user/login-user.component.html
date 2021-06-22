@@ -1,47 +1,49 @@
 <ion-content>
 	<ion-grid>
-		<form [formGroup]="loginForm" novalidate>
+	<form [formGroup]="loginForm"  >
+		<ion-row>
+			<ion-toolbar>
+				<ion-col>
+					<ion-title size="large" type="submit" expand="block" class="titulo">Iniciar Sesión</ion-title>
+				</ion-col>
+			</ion-toolbar>
+		</ion-row>
+		
+		<ion-item>
+			<ion-label size="medium" position="stacked">Correo</ion-label>
+			<ion-input type="email" formControlName="email" class="form-control"></ion-input>
+		</ion-item>
+		<ion-label  color="danger" *ngIf="isInvalid('email')">
+			<h6 *ngIf="hasErrorControl('email', 'required')">Este campo es requerido</h6>
+			<h6 *ngIf="hasErrorControl('email', 'pattern')">
+				Ingrese un correo válido
+			</h6>
+		</ion-label>
+		<ion-item>
+			<ion-label size="medium" position="stacked">Contraseña</ion-label>
+			<ion-input type="password" formControlName="password" class="form-control"></ion-input>
+		</ion-item><br>
+		<ion-label  color="danger" *ngIf="isInvalid('password')">
+			<h6 *ngIf="hasErrorControl('password', 'required')">
+				Este campo es requerido
+			</h6>
+			<h6 *ngIf="hasErrorControl('password', 'pattern')">
+				Contraseña invalida 
+			</h6>
+		</ion-label>
+		
+		<ion-grid>
 			<ion-row>
-				<ion-toolbar>
-					<ion-col>
-						<ion-title size="large" type="submit" expand="block" class="titulo">Iniciar Sesión</ion-title>
-					</ion-col>
-				</ion-toolbar>
+				<ion-col>
+					<ion-button color="secondary" expand="block">Cancelar</ion-button>
+				</ion-col>
+				<ion-col>
+					<ion-button color="primary" expand="block" type="submit" (click)="login()" >Aceptar</ion-button>
+				</ion-col>
 			</ion-row>
-			
-			<ion-item>
-				<ion-label size="medium" position="stacked">Correo</ion-label>
-				<ion-input type="email" formControlName="email" class="form-control"></ion-input>
-			</ion-item>
-			<ion-label  color="danger" *ngIf="isInvalid('email')">
-				<h6 *ngIf="hasErrorControl('email', 'required')">Este campo es requerido</h6>
-				<h6 *ngIf="hasErrorControl('email', 'pattern')">
-					Ingrese un correo válido
-				</h6>
-			</ion-label>
-			<ion-item>
-				<ion-label size="medium" position="stacked">Contraseña</ion-label>
-				<ion-input type="password" formControlName="password" class="form-control"></ion-input>
-			</ion-item>
-			<br>
-			<ion-label  color="danger" *ngIf="isInvalid('password')">
-				<h6 *ngIf="hasErrorControl('password', 'required')">
-					Este campo es requerido
-				</h6>
-				<h6 *ngIf="hasErrorControl('password', 'pattern')">
-					Contraseña invalida
-				</h6>
-			</ion-label>
-			<ion-grid>
-				<ion-row>
-					<ion-col>
-						<ion-button color="secondary" (click)="cancel()" expand="block">Cancelar</ion-button>
-					</ion-col>
-					<ion-col>
-						<ion-button color="primary" (click)="login()" expand="block" type="submit" [disabled]="!loginForm.valid">Aceptar</ion-button>
-					</ion-col>
-				</ion-row>
-			</ion-grid>
-		</form>
+		</ion-grid>
+
+		<a button href="register"></a>
+	</form>
 	</ion-grid>
 </ion-content>

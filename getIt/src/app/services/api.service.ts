@@ -20,7 +20,7 @@ export class ApiService {
   });
 
   public post<T>(dir: string, model: object): Observable<T> {
-    return this.http.post<T>(`${environment.api_url}/${dir}`, model);
+    return this.http.post<T>(`${environment.api_url}/${dir}`, model, {headers: this.httpHeaders});
   }
 
   public getAll<T>(dir: string): Observable<T> {
@@ -48,7 +48,7 @@ export class ApiService {
     return this.http.put<any>(`${environment.api_url}/${dir}`, model);
   }
 
-  public login(dir: string, model: object): Observable<any> {
+  public postWithoutHeaders(dir: string, model: object): Observable<any> {
     return this.http.post<any>(dir, model);
   }
 }

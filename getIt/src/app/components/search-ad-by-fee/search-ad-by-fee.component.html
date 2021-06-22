@@ -1,7 +1,7 @@
 <ion-header>
 	<ion-toolbar>
 		<ion-buttons slot="start">
-			<ion-back-button color="tertiary" defaultHref="/getit/search"></ion-back-button>
+			<ion-back-button color="tertiary" text="Atrás" defaultHref="/getit/search"></ion-back-button>
 		</ion-buttons>
 
 		<ion-title>Buscar por Honorarios</ion-title>
@@ -9,19 +9,19 @@
 </ion-header>
 
 <ion-content>
-	<ion-searchbar (ionChange)="search( $event )"></ion-searchbar>
+	<ion-searchbar (ionChange)="search( $event )" placeholder="Filtrar por honorarios"></ion-searchbar>
 	<ion-list>
     	<ion-card *ngFor="let ad of ads | filtro: txtToSearch: 'fee'">
 			<ion-item href="getit/view-profile/{{ad.user.id}}">
 				<ion-avatar slot="start">
-					<ion-img [src]="'data:image/jpeg;base64,' + ad.user.image"> </ion-img>
+					<ion-img [src]="'data:image/jpeg;base64,' + ad.user.image" class="center" > </ion-img>
 				</ion-avatar>
 				<ion-label>
 				  {{ ad.user.email }}
 				</ion-label>
 			</ion-item>
 			<ion-row *ngIf="ad.image != ''">
-				<ion-img height="100%" width="100%" [src]="ad.image" alt="Default"> </ion-img>
+				<ion-img height="100%" width="100%" class="center" [src]="ad.image" alt="Default"> </ion-img>
 			</ion-row>
 			<ion-card-title></ion-card-title>
 			<ion-card-subtitle></ion-card-subtitle>
