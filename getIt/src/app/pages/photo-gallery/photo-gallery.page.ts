@@ -78,6 +78,7 @@ export class PhotoGalleryPage {
 					this.showMessage.showSuccessAlert(
 						"Publicación registrada exitosamente"
 					);
+          this.goPhotoToGallery()
 				});
 				this.deletePhotoToGallery(photo, 0);
 			});
@@ -133,5 +134,9 @@ export class PhotoGalleryPage {
 
   deletePhotoToGallery(photo: UserPhoto, position: number) {
     this.photoService.deletePicture(photo, position);
+  }
+
+  public goPhotoToGallery() {
+	  this.router.navigate(['getit/photo-gallery/',  this.route.snapshot.params.id]);
   }
 }

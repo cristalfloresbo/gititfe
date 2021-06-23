@@ -21,6 +21,7 @@ export class ViewProfilePage implements OnInit {
   public userId;
   public currentUser: number;
   public rating;
+  public userS;
   public age: number;
   public publications;
   public workAreas = '';
@@ -33,7 +34,8 @@ export class ViewProfilePage implements OnInit {
   ngOnInit() {
     this.getUser();
     this.userId = this.route.snapshot.params.id;
-	this.currentUser = this.userService.getCurrentUser("user");
+	  this.currentUser = this.userService.getCurrentUser("user");
+
   }
 
   public getUser() {

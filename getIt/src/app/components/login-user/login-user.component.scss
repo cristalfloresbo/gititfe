@@ -1,6 +1,6 @@
 form {
 	font-size: medium;
-    padding:150px 25px 180px 25px;
+    padding-top: 10%;
     position: relative;
 	margin: 0 auto;
     width: 350px;
@@ -13,4 +13,10 @@ form {
 .button{
     text-transform:initial;
     text-align: center
+}
+.title{
+    padding-top: 20%;
+    text-align: center;
+    font-weight: bold;
+    font-size: 32px;
 }
