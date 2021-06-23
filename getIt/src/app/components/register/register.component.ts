@@ -57,7 +57,6 @@ export class RegisterComponent implements OnInit {
     birthdate: [this.defaultDate, [Validators.required]],
     address: ["", [Validators.minLength(10), Validators.maxLength(50)]],
     workAreaId: ["0"],
-    score: [this.defaultNum],
     email: [
       "",
       [
@@ -149,7 +148,7 @@ export class RegisterComponent implements OnInit {
   }
 
   addImage(){
-    this.user.controls.image.setValue(this.photoService.photos[0]);
+    this.user.controls.image.setValue(this.photoService.photos[0].webviewPath);
   }
 
   clearForm() {
