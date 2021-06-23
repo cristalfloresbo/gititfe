@@ -1,6 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from '@angular/router';
+import { UserService } from "src/app/services/user.service";
 import { ApiService } from "src/app/services/api.service";
 import { ShowAlertMessage } from "src/app/helpers/showAlertMessage";
 import { Publication } from "src/app/models/publication.model";
@@ -18,7 +19,6 @@ export class PublishOfferAndDemandPage implements OnInit {
   public publicationForm: FormGroup;
   public workareas: WorkArea[] = [];
   private publication: Publication;
-  private USER_ID = 1;
   private showMessage = new ShowAlertMessage();
 
   constructor(
@@ -27,6 +27,7 @@ export class PublishOfferAndDemandPage implements OnInit {
     private route: Router,	
 	public photoService: PhotoService,
 	public actionSheetController: ActionSheetController,
+	private userService: UserService
   ) {}
 
   public async ngOnInit() {
@@ -65,7 +66,7 @@ export class PublishOfferAndDemandPage implements OnInit {
 
   public async save() {
     this.publication = this.publicationForm.value as Publication;
-    this.publication.userId = this.USER_ID;
+    this.publication.userId = +this.userService.getCurrentUser("user");
 	if ((this.photoService.photos.length > 0)) {
 		this.publication.image = await this.photoService.photos[0].webviewPath;
 		this.apiService.post("publication", this.publication)

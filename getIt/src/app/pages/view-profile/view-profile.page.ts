@@ -36,7 +36,6 @@ export class ViewProfilePage implements OnInit {
   public getUser() {
     this.apiService.getById<any>('user', this.route.snapshot.params.id).subscribe(response => {
       this.user = response;
-      console.log('uuu', this.user);
       this.getWorkAreas();
       this.getRating();
       this.getPublications();

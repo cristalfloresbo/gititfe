@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { ApiService } from "src/app/services/api.service";
 import { ShowAlertMessage } from 'src/app/helpers/showAlertMessage';
 import { HttpErrorResponse } from '@angular/common/http';
-import { StorageService } from "src/app/services/storage.service";
+import { UserService } from "src/app/services/user.service";
 
 @Component({
   selector: 'app-login-user',
@@ -22,7 +22,7 @@ export class LoginUserComponent implements OnInit {
 	constructor(
 		public formBuilder: FormBuilder,
 		private apiService: ApiService,
-		private storageService: StorageService,
+		private userService: UserService,
 		private router: Router
 	) { }
 	
@@ -54,10 +54,10 @@ export class LoginUserComponent implements OnInit {
 	public async login() {
 		await this.apiService.postWithoutHeaders('login', this.loginForm.value)
 		.subscribe((response: LoginSuccess) => {
-			this.storageService.setCurrentObject(response.token);
+			this.userService.setCurrentUser(response.token, "token");
+			this.userService.setCurrentUser(response.id, "user");
 			this.showAlert.showSuccessAlert("Bienvenido..!");
 			this.router.navigate(['/getit/home']);
-			window.location.reload();
 		}, 
 		(error: HttpErrorResponse) => {
 			this.showAlert.showErrorAlert("Datos incorrectos, vuelva a intentarlo");

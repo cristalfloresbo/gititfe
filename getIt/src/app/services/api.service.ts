@@ -4,7 +4,8 @@ import { Observable } from "rxjs";
 import { objectToQueryString } from "src/app/helpers/queryParams";
 import { environment } from "src/environments/environment";
 import { CONNECT_PARAMS, SEARCH } from "../helpers/constants";
-import { StorageService } from "../services/storage.service";
+import { UserService } from "./user.service";
+import { LoginSuccess } from "src/app/models/login.model";
 
 @Injectable({
   providedIn: "root",
@@ -12,11 +13,12 @@ import { StorageService } from "../services/storage.service";
 
 export class ApiService {
 
-  constructor(private http: HttpClient, private storageService: StorageService) {}
+  constructor(private http: HttpClient, private userService: UserService) {}
+  public token: string = this.userService.getCurrentUser("token");
 
   public httpHeaders = new HttpHeaders({
     'content-type': 'application/json',
-	'Authorization': `Bearer ${this.storageService.getCurrentObject()}`
+	'Authorization': `Bearer ${this.token}`
   });
 
   public post<T>(dir: string, model: object): Observable<T> {

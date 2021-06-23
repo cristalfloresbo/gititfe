@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { LoginSuccess } from "src/app/models/login.model";
 
 @Injectable({
   providedIn: "root",
@@ -7,22 +8,22 @@ import { Injectable } from "@angular/core";
 /**
  * This is the StorageService class.
  */
-export class StorageService {
+export class UserService {
   constructor() {}
 
   /**
    * This method sets a current object
    */
-  public setCurrentObject(obj: any): void {
+  public setCurrentUser(obj: any, key: string): void {
     const CURRENT_OBJ = JSON.stringify(obj);
-    localStorage.setItem("data", CURRENT_OBJ);
+    localStorage.setItem(key, CURRENT_OBJ);
   }
 
   /**
    * This method gets a current object
    */
-  public getCurrentObject(): any {
-    const CURRENT_OBJ = localStorage.getItem("data");
+  public getCurrentUser(key: string): any {
+    const CURRENT_OBJ = localStorage.getItem(key);
     if ((CURRENT_OBJ !== null) || (CURRENT_OBJ !== undefined)) {
       const OBJ = JSON.parse(CURRENT_OBJ);
       return OBJ;
@@ -33,7 +34,7 @@ export class StorageService {
   /**
    * This method removes a current object
    */
-  public removeCurrentObject(): void {
-    localStorage.removeItem("data");
+  public removeCurrentUser(key: string): void {
+    localStorage.removeItem(key);
   }
 }
