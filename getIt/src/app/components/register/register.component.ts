@@ -8,7 +8,6 @@ import { Avatar } from "src/app/helpers/avatar";
 import { WorkArea } from "src/app/models/workArea.model";
 import * as moment from "moment";
 import { PhotoService } from 'src/app/services/photo.service';
-import * as sha512 from 'js-sha512';
 import { UserPhoto } from "src/app/models/userPhoto.model";
 
 @Component({
@@ -93,7 +92,6 @@ export class RegisterComponent implements OnInit {
     const ag = this.calAge();
     this.ePhone = this.auxPhone;
     this.ePassword = this.auxPassword;
-	  this.user.controls.password.setValue(sha512.sha512(this.user.controls['password'].value));
     if (ag >= 18) {
       this.createLink();
       if ((this.photoService.photos.length > 0)) {
@@ -102,10 +100,10 @@ export class RegisterComponent implements OnInit {
       } else {
         this.user.controls.image.setValue(this.avatar.getAvatar());
       }
-      this.apiService.postWithoutHeaders("/register-user", this.user.value).subscribe(
+      this.apiService.postWithoutHeaders("register-user", this.user.value).subscribe(
         (idUser: number) => {
           this.showMessage.showSuccessAlert("¡Se registró exitosamente!");
-          window.location.href = "/getit/home";
+          window.location.href = "/login-user";
         },
         (error: HttpErrorResponse) => {
           this.recoverFromError();
