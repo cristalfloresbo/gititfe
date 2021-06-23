@@ -7,6 +7,7 @@ import { RatingComponent } from 'src/app/components/rating/rating.component';
 import { ViewPublicationComponent } from 'src/app/components/view-publication/view-publication.component';
 import { ShowAlertMessage } from 'src/app/helpers/showAlertMessage';
 import { Rating } from 'src/app/models/rating.model';
+import { UserService } from 'src/app/services/user.service';
 import { ApiService } from 'src/app/services/api.service';
 
 @Component({
@@ -18,7 +19,7 @@ export class ViewProfilePage implements OnInit {
 
   public user;
   public userId;
-  public currentUser = 1;
+  public currentUser: number;
   public rating;
   public age: number;
   public publications;
@@ -26,11 +27,13 @@ export class ViewProfilePage implements OnInit {
   public showAlertMessage = new ShowAlertMessage();
 
   constructor(private apiService: ApiService, private route: ActivatedRoute,
-              private router: Router, private modalCtrl: ModalController) {}
+              private router: Router, private modalCtrl: ModalController, 
+			  private userService: UserService) {}
 
   ngOnInit() {
     this.getUser();
     this.userId = this.route.snapshot.params.id;
+	this.currentUser = this.userService.getCurrentUser("user");
   }
 
   public getUser() {

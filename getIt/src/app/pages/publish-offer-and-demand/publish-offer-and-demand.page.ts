@@ -9,6 +9,7 @@ import { WorkArea } from "src/app/models/workArea.model";
 import { PhotoService } from '../../services/photo.service';
 import { ActionSheetController } from '@ionic/angular';
 import { UserPhoto } from "src/app/models/userPhoto.model";
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: "app-publish-offer-and-demand",
@@ -66,7 +67,7 @@ export class PublishOfferAndDemandPage implements OnInit {
 
   public async save() {
     this.publication = this.publicationForm.value as Publication;
-    this.publication.userId = +this.userService.getCurrentUser("user");
+    this.publication.userId = this.userService.getCurrentUser("user");
 	if ((this.photoService.photos.length > 0)) {
 		this.publication.image = await this.photoService.photos[0].webviewPath;
 		this.apiService.post("publication", this.publication)
@@ -74,8 +75,10 @@ export class PublishOfferAndDemandPage implements OnInit {
 			this.showMessage.showSuccessAlert(
 				"Publicación registrada exitosamente"
 			);
-      window.location.reload();
-      this.route.navigate(['getit/home/']);
+			window.location.reload();
+        	this.route.navigate(['getit/home/']);
+		}, (error: HttpErrorResponse) => {
+			this.showMessage.showErrorAlert("Ocurrio un error, vuelva a intentarlo");
 		});
 		this.deletePhotoToGallery(this.photoService.photos[0], 0);
 		this.route.navigate(['/getit/home']);
@@ -87,8 +90,10 @@ export class PublishOfferAndDemandPage implements OnInit {
 				"Publicación registrada exitosamente"
 			);
 			window.location.reload();
+			this.route.navigate(['/getit/home']);
+		}, (error: HttpErrorResponse) => {
+			this.showMessage.showErrorAlert("Ocurrio un error, vuelva a intentarlo");
 		});
-		this.route.navigate(['/getit/home']);
 	}
 	this.clearPublicationForm();
   }

@@ -149,8 +149,7 @@ export class RegisterComponent implements OnInit {
   }
 
   addImage(){
-    this.user.controls.image.setValue(this.photoService.getImage());
-    console.log(this.user.controls.image);
+    this.user.controls.image.setValue(this.photoService.photos[0]);
   }
 
   clearForm() {
