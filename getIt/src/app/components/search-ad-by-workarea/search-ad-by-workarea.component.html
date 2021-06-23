@@ -22,7 +22,7 @@
     	<ion-card *ngFor="let ad of ads">
 			<ion-item href="getit/view-profile/{{ad.user.id}}">
 				<ion-avatar slot="start">
-					<ion-img [src]="'data:image/jpeg;base64,' + ad.user.image" class="center" > </ion-img>
+					<ion-img [src]="ad.user.image" class="center" > </ion-img>
 				</ion-avatar>
 				<ion-label>
 				  {{ ad.user.email }}
