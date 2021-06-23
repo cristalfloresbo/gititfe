@@ -1,7 +1,15 @@
-<ion-header>
+<ion-header class="ion-text-center">
 	<ion-toolbar color="primary">
+		<!--<ion-buttons slot="end">
+			<ion-icon name="person"></ion-icon>
+		</ion-buttons>-->
+		<button ion-button icon-only slot="end" class="boton_reg" routerLink="/login" (click)="onLogOut()">
+			<ion-icon name="person"></ion-icon>
+		  </button>
 		<ion-title>
 			  Get it!
-		</ion-title>
+			</ion-title>
 	  </ion-toolbar>
+	 
 </ion-header>
+

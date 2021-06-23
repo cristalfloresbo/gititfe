@@ -1,11 +1,23 @@
-import { Component } from "@angular/core";
-import { Router } from "@angular/router";
+import { Component, OnInit, Input } from '@angular/core';
+import { UserService } from "src/app/services/user.service" 
 
 @Component({
-  selector: "app-header",
-  styleUrls: ["header.component.scss"],
-  templateUrl: "./header.component.html",
+  selector: 'app-header',
+  styleUrls: ['header.component.scss'],
+  templateUrl: './header.component.html'
 })
-export class HeaderComponent {
-  constructor(private router: Router) {}
+export class HeaderComponent implements OnInit {
+  @Input() input:boolean;
+
+  constructor(
+	private userService: UserService
+  ) {}
+
+  ngOnInit(): void {}
+
+  onLogOut(){
+    this.userService.removeCurrentUser("token");
+    this.userService.removeCurrentUser("user");
+    window.location.reload();
+  }
 }
